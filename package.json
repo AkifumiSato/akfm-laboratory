@@ -5,7 +5,7 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md,css}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,md,css,js,mjs,cjs}\"",
     "prepare": "husky install"
   },
   "devDependencies": {

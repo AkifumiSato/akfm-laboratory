@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings 0"
+    "lint": "eslint . --max-warnings 0",
+    "prepare": "panda codegen"
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
@@ -16,6 +17,7 @@
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "14.0.4",
+    "@pandacss/dev": "0.27.2",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/eslint": "8.56.1",
