@@ -3,15 +3,17 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "NODE_ENV=development auth-server | pino-pretty",
     "build": "next build",
-    "start": "next start",
+    "start": "NODE_ENV=production auth-server",
     "lint": "eslint . --max-warnings 0",
     "prepare": "panda codegen"
   },
   "dependencies": {
+    "@repo/server": "workspace:*",
     "@repo/ui": "workspace:*",
-    "next": "14.0.4",
+    "next": "14.1.0",
+    "pino-pretty": "10.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0"
   },
