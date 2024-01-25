@@ -1,6 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import Link from "next/link";
 import type { JSX } from "react";
+import { css } from "../styled-system/css";
 
 export const metadata: Metadata = {
   title: "Create Turborepo",
@@ -14,7 +16,41 @@ export default function RootLayout({
 }): JSX.Element {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>
+        <div
+          className={css({
+            padding: "20px",
+            minHeight: "100vh",
+            maxWidth: "1060px",
+            margin: "0 auto",
+            display: "flex",
+            flexDirection: "column",
+            rowGap: "20px",
+          })}
+        >
+          <Link
+            href="/"
+            className={css({
+              fontSize: "3xl",
+              fontWeight: "bold",
+              paddingBottom: "20px",
+              borderBottom: "1px solid",
+              borderColor: "gray.300",
+            })}
+          >
+            akfm laboratory
+          </Link>
+          <div
+            className={css({
+              maxWidth: "700px",
+              width: "100%",
+              margin: "0 auto",
+            })}
+          >
+            {children}
+          </div>
+        </div>
+      </body>
     </html>
   );
 }

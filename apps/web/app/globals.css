@@ -1,1 +1,8 @@
 @layer reset, base, tokens, recipes, utilities;
+
+@layer base {
+  * {
+    /* --colors-gray-700 */
+    color: #374151;
+  }
+}

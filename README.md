@@ -1,4 +1,4 @@
-# Example Next.js App
+# akfm laboratory
 
 ## Todo
 
