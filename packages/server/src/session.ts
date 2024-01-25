@@ -2,10 +2,7 @@ import { AsyncLocalStorage } from "node:async_hooks";
 
 export type Session = {
   user: {
-    id: string;
-    name: string;
-    email: string;
-    picture: string;
+    access_token: string;
   };
 };
 

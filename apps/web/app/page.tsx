@@ -42,8 +42,9 @@ export default function Page(): JSX.Element {
             fontWeight: "bold",
           })}
         >
-          todo: sing in impl
+          todo: Button as props impl
         </p>
+        <a href="/login/github">github login link</a>
       </div>
     </main>
   );
