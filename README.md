@@ -4,7 +4,11 @@
 
 - [x] custom server
 - [x] github OAuth
-- [ ] redis session
-- [ ] cache handler on redis
-- [ ] article post
-- [ ] tagging
+- [ ] storybook add
+- [ ] dynamic rendering page add
+- [ ] redis
+  - session
+  - cache handler
+- [ ] user id setting
+- [ ] icon saving
+- [ ] document post

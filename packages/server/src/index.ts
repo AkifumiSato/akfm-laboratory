@@ -21,9 +21,7 @@ const envSettings = {
   },
 } as const;
 
-const fastify = Fastify({
-  logger: true,
-});
+const fastify = Fastify();
 
 fastify.register(healthCheckPlugin);
 fastify.register(fastifyCookie);

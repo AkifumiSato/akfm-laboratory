@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "NODE_ENV=development auth-server | pino-pretty",
+    "dev": "NODE_ENV=development proxy-server | pino-pretty",
     "build": "next build",
-    "start": "NODE_ENV=production auth-server",
+    "start": "NODE_ENV=production proxy-server",
     "lint": "eslint . --max-warnings 0",
     "prepare": "panda codegen"
   },

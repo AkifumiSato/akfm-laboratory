@@ -6,7 +6,7 @@
   "main": "dist/index.mjs",
   "types": "./src/index.ts",
   "bin": {
-    "auth-server": "./dist/index.mjs"
+    "proxy-server": "./dist/index.mjs"
   },
   "scripts": {
     "type": "tsc --noEmit",
