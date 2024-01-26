@@ -1,27 +1,44 @@
 import type { JSX } from "react";
-import { css } from "../styled-system/css";
+import { cva } from "../styled-system/css";
 
-type ButtonProps = JSX.IntrinsicElements["button"];
+type ButtonProps = JSX.IntrinsicElements["button"] & {
+  color: "dark" | "blue";
+};
 
-export function Button({ children, ...props }: ButtonProps) {
-  return (
-    <button
-      {...props}
-      className={css({
-        padding: "10px 20px",
-        borderRadius: "5px",
+const button = cva({
+  base: {
+    padding: "10px 20px",
+    borderRadius: "5px",
+    backgroundColor: "black",
+    border: "none",
+    cursor: "pointer",
+    fontSize: "m",
+    fontWeight: "bold",
+    transition: "background-color 0.2s",
+  },
+  variants: {
+    color: {
+      dark: {
         backgroundColor: "black",
-        border: "none",
-        cursor: "pointer",
-        fontSize: "m",
-        fontWeight: "bold",
         color: "white",
-        transition: "background-color 0.2s",
         _hover: {
           backgroundColor: "gray.800",
         },
-      })}
-    >
+      },
+      blue: {
+        backgroundColor: "blue.500",
+        color: "white",
+        _hover: {
+          backgroundColor: "blue.300",
+        },
+      },
+    },
+  },
+});
+
+export function Button({ children, color = "dark", ...props }: ButtonProps) {
+  return (
+    <button {...props} className={button({ color })}>
       {children}
     </button>
   );
