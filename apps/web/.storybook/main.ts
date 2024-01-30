@@ -1,4 +1,5 @@
 import type { StorybookConfig } from "@storybook/nextjs";
+import * as path from "path";
 
 import { join, dirname } from "path";
 
@@ -23,10 +24,21 @@ const config: StorybookConfig = {
   ],
   framework: {
     name: getAbsolutePath("@storybook/nextjs"),
-    options: {},
+    options: {
+      builder: {
+        useSWC: true,
+      },
+    },
   },
   docs: {
     autodocs: "tag",
+  },
+  webpackFinal: async (config) => {
+    config.resolve!.alias = {
+      ...config.resolve!.alias,
+      "@": path.resolve(__dirname, "../"),
+    };
+    return config;
   },
 };
 export default config;

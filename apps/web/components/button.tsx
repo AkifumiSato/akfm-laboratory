@@ -1,11 +1,7 @@
 import type { JSX } from "react";
 import { cva } from "@/styled-system/css";
 
-type ButtonProps = JSX.IntrinsicElements["button"] & {
-  color?: "dark" | "blue";
-};
-
-const button = cva({
+export const button = cva({
   base: {
     padding: "10px 20px",
     borderRadius: "5px",
@@ -35,6 +31,10 @@ const button = cva({
     },
   },
 });
+
+type ButtonProps = {
+  color?: "dark" | "blue";
+} & JSX.IntrinsicElements["button"];
 
 export function Button({ children, color = "dark", ...props }: ButtonProps) {
   return (

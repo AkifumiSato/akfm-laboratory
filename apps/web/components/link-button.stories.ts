@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { Button } from "./button";
+import { LinkButton } from "./link-button";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta = {
-  title: "components/Button",
-  component: Button,
+  title: "components/LinkButton",
+  component: LinkButton,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
     layout: "centered",
@@ -15,7 +15,7 @@ const meta = {
   // argTypes: {
   //   color: { control: "color" },
   // },
-} satisfies Meta<typeof Button>;
+} satisfies Meta<typeof LinkButton>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
@@ -23,13 +23,15 @@ type Story = StoryObj<typeof meta>;
 export const Dark: Story = {
   args: {
     color: "dark",
-    children: "Button",
+    href: "/",
+    children: "Link",
   },
 };
 
 export const Blue: Story = {
   args: {
     color: "blue",
-    children: "Button",
+    href: "/",
+    children: "Link",
   },
 };
