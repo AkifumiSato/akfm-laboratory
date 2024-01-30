@@ -1,8 +1,8 @@
 import type { JSX } from "react";
-import { cva } from "../styled-system/css";
+import { cva } from "@/styled-system/css";
 
 type ButtonProps = JSX.IntrinsicElements["button"] & {
-  color: "dark" | "blue";
+  color?: "dark" | "blue";
 };
 
 const button = cva({

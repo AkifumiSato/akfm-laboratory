@@ -1,5 +1,5 @@
 import { Button } from "@/components/button";
-import { css } from "../styled-system/css";
+import { css } from "@/styled-system/css";
 import type { JSX } from "react";
 
 export default function Page(): JSX.Element {
@@ -29,9 +29,9 @@ export default function Page(): JSX.Element {
         className={css({
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          alignItems: "flex-start",
           rowGap: "20px",
-          padding: "100px 0",
+          padding: "50px 0",
         })}
       >
         <p>Sign in at Github to try out the feature?</p>

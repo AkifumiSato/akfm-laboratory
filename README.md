@@ -4,7 +4,7 @@
 
 - [x] custom server
 - [x] github OAuth
-- [ ] storybook add
+- [x] storybook add
 - [ ] dynamic rendering page add
 - [ ] redis
   - session
