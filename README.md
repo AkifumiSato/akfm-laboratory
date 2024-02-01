@@ -5,7 +5,7 @@
 - [x] custom server
 - [x] github OAuth
 - [x] storybook add
-- [ ] dynamic rendering page add
+- [x] dynamic rendering page add
 - [ ] redis
   - session
   - cache handler
