@@ -40,6 +40,8 @@ export default function RootLayout({
               className={css({
                 fontSize: "2xl",
                 fontWeight: "bold",
+                textDecoration: "none",
+                color: "gray.700",
               })}
             >
               akfm laboratory
@@ -48,10 +50,16 @@ export default function RootLayout({
           <ul
             className={css({
               paddingTop: "20px",
+              display: "flex",
+              flexDirection: "column",
+              rowGap: "20px",
             })}
           >
             <li>
               <NavLink href="/dynamic_rendering">dynamic_rendering</NavLink>
+            </li>
+            <li>
+              <NavLink href="/login/github">github sign in</NavLink>
             </li>
           </ul>
         </div>
@@ -63,7 +71,7 @@ export default function RootLayout({
         >
           <div
             className={css({
-              maxWidth: "700px",
+              maxWidth: "900px",
               width: "100%",
             })}
           >

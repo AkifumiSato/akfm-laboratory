@@ -22,6 +22,7 @@ export function NavLink({
       className={css({
         fontSize: "l",
         color: "gray.500",
+        textDecoration: "none",
         _currentPage: {
           color: "blue.500",
         },

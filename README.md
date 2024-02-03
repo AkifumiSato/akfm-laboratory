@@ -9,6 +9,7 @@
 - [ ] redis
   - session
   - cache handler
-- [ ] user id setting
-- [ ] icon saving
+- [ ] pages with graphql
+  - [ ] user id setting
+  - [ ] icon saving
 - [ ] document post

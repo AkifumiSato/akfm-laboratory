@@ -1,4 +1,3 @@
-import { Button } from "@/components/button";
 import { css } from "@/styled-system/css";
 import type { JSX } from "react";
 
@@ -23,7 +22,13 @@ export default function Page(): JSX.Element {
         >
           Caution!
         </h3>
-        <p>This is a personal, experimental application.</p>
+        <p>
+          これは
+          <a href="https://twitter.com/akfm_sato" target="_blank">
+            @akfm_sato
+          </a>
+          がNext.jsの研究を行うための、実験的なサイトです。
+        </p>
       </div>
       <div
         className={css({
@@ -34,17 +39,7 @@ export default function Page(): JSX.Element {
           padding: "50px 0",
         })}
       >
-        <p>Sign in at Github to try out the feature?</p>
-        <Button>Github</Button>
-        <p
-          className={css({
-            color: "red.500",
-            fontWeight: "bold",
-          })}
-        >
-          todo: Button as props impl
-        </p>
-        <a href="/login/github">github login link</a>
+        <p>TBW: 各機能紹介や設計・実装など</p>
       </div>
     </main>
   );

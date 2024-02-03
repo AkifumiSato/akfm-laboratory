@@ -5,4 +5,10 @@
     /* --colors-gray-700 */
     color: #374151;
   }
+
+  a {
+    color: #3b82f6;
+    text-decoration: underline;
+    padding: 0 2px;
+  }
 }
