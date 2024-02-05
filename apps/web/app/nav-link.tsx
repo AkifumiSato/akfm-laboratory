@@ -24,7 +24,7 @@ export function NavLink({
         color: "gray.500",
         textDecoration: "none",
         _currentPage: {
-          color: "blue.500",
+          color: "blue.700",
         },
       })}
     >
