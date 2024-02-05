@@ -6,9 +6,8 @@
 - [x] github OAuth
 - [x] storybook add
 - [x] dynamic rendering page add
-- [ ] redis
-  - session
-  - cache handler
+- [x] redis session
+- [ ] redis cache handler
 - [ ] pages with graphql
   - [ ] user id setting
   - [ ] icon saving

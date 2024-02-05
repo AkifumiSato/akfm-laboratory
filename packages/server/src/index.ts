@@ -5,6 +5,7 @@ import fastifySession from "@fastify/session";
 import { githubAuthPlugin } from "./github-auth-plugin";
 import { healthCheckPlugin } from "./health-check-plugin";
 import * as v from "valibot";
+import { store } from "./session";
 
 // prepare next app
 const nextApp = next({ dev: process.env.NODE_ENV !== "production" });
@@ -33,6 +34,7 @@ fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
   cookieName: "sessionId",
   secret: envVariables.SESSION_SECRET,
+  store,
 });
 fastify.register(githubAuthPlugin, {
   serveOrigin: "http://localhost:3000",
