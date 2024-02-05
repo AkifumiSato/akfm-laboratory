@@ -1,0 +1,10 @@
+services:
+  redis:
+    image: redis
+    container_name: akfm_redis
+    volumes:
+      - akfm-redis:/data
+    restart: always
+volumes:
+  akfm-redis:
+    driver: local
