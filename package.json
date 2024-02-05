@@ -2,6 +2,7 @@
   "name": "akfm-laboratory",
   "private": true,
   "scripts": {
+    "dev": "turbo dev",
     "build": "turbo build",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md,css,js,mjs,cjs}\"",
