@@ -16,7 +16,18 @@ export default defineConfig({
 
   // Useful for theme customization
   theme: {
-    extend: {},
+    extend: {
+      tokens: {
+        zIndex: {
+          header: {
+            value: 3,
+          },
+          modal: {
+            value: 10,
+          },
+        },
+      },
+    },
   },
 
   // The output directory for your css system
