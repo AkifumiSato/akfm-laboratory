@@ -7,7 +7,7 @@
 - [x] storybook add
 - [x] dynamic rendering page add
 - [x] redis session
-- [ ] redis cache handler
+- [x] redis cache handler
 - [ ] User api(REST)
 - [ ] pages with graphql
   - [ ] user id setting

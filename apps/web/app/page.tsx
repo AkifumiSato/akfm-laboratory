@@ -1,5 +1,6 @@
 import { css } from "@/styled-system/css";
 import type { JSX } from "react";
+import { H1 } from "@/components/h1";
 
 export default function Page(): JSX.Element {
   return (
@@ -39,7 +40,16 @@ export default function Page(): JSX.Element {
           padding: "50px 0",
         })}
       >
-        <p>TBW: 各機能紹介や設計・実装など</p>
+        <H1>Implement list</H1>
+        <ul
+          className={css({
+            listStyle: "inside",
+          })}
+        >
+          <li>fastify server</li>
+          <li>fastify auth</li>
+          <li>custom cache handler</li>
+        </ul>
       </div>
     </main>
   );
