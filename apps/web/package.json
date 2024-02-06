@@ -12,11 +12,13 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@neshca/cache-handler": "0.6.10",
     "@repo/server": "workspace:*",
     "next": "14.1.0",
     "pino-pretty": "10.3.1",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "redis": "4.6.13"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "14.0.4",

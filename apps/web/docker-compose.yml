@@ -9,6 +9,12 @@ services:
     volumes:
       - akfm-redis:/data
     restart: always
+  redis-stack:
+    image: redis/redis-stack:latest
+    container_name: cache-handler-redis
+    ports:
+      - 7000:6379
+      - 8001:8001
 volumes:
   akfm-redis:
     driver: local

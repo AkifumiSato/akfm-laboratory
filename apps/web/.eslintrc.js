@@ -6,5 +6,5 @@ module.exports = {
   parserOptions: {
     project: true,
   },
-  ignorePatterns: ["styled-system/**/*"],
+  ignorePatterns: ["styled-system/**/*", "cache-handler.js"],
 };

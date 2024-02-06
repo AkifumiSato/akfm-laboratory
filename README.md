@@ -8,6 +8,7 @@
 - [x] dynamic rendering page add
 - [x] redis session
 - [ ] redis cache handler
+- [ ] User api(REST)
 - [ ] pages with graphql
   - [ ] user id setting
   - [ ] icon saving
