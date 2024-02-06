@@ -1,6 +1,6 @@
 import { css } from "@/styled-system/css";
 import type { JSX } from "react";
-import { H1 } from "@/components/h1";
+import { Prose } from "@/components/prose";
 
 export default function Page(): JSX.Element {
   return (
@@ -31,26 +31,14 @@ export default function Page(): JSX.Element {
           がNext.jsの研究を行うための、実験的なサイトです。
         </p>
       </div>
-      <div
-        className={css({
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-          rowGap: "20px",
-          padding: "50px 0",
-        })}
-      >
-        <H1>Implement list</H1>
-        <ul
-          className={css({
-            listStyle: "inside",
-          })}
-        >
+      <Prose>
+        <h1>Implement list</h1>
+        <ul>
           <li>fastify server</li>
           <li>fastify auth</li>
           <li>custom cache handler</li>
         </ul>
-      </div>
+      </Prose>
     </main>
   );
 }
