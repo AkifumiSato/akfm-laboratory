@@ -1,12 +1,12 @@
 {
-  "name": "@repo/server",
+  "name": "@repo/app-proxy-server",
   "version": "0.0.0",
   "private": true,
   "license": "MIT",
   "main": "dist/index.mjs",
   "types": "./src/index.ts",
   "bin": {
-    "proxy-server": "./dist/index.mjs"
+    "app-proxy-server": "./dist/index.mjs"
   },
   "scripts": {
     "dev": "tsup src/index.ts --watch",

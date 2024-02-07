@@ -29,9 +29,9 @@ importers:
       '@neshca/cache-handler':
         specifier: 0.6.10
         version: 0.6.10(next@14.1.0)(redis@4.6.13)
-      '@repo/server':
+      '@repo/app-proxy-server':
         specifier: workspace:*
-        version: link:../../packages/server
+        version: link:../../packages/app-proxy-server
       next:
         specifier: 14.1.0
         version: 14.1.0(@babel/core@7.23.3)(react-dom@18.2.0)(react@18.2.0)
@@ -109,31 +109,7 @@ importers:
         specifier: 5.3.3
         version: 5.3.3
 
-  packages/eslint-config:
-    devDependencies:
-      '@typescript-eslint/eslint-plugin':
-        specifier: 6.17.0
-        version: 6.17.0(@typescript-eslint/parser@6.17.0)(eslint@8.56.0)(typescript@5.3.3)
-      '@typescript-eslint/parser':
-        specifier: 6.17.0
-        version: 6.17.0(eslint@8.56.0)(typescript@5.3.3)
-      '@vercel/style-guide':
-        specifier: 5.1.0
-        version: 5.1.0(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
-      eslint-config-prettier:
-        specifier: 9.1.0
-        version: 9.1.0(eslint@8.56.0)
-      eslint-config-turbo:
-        specifier: 1.11.3
-        version: 1.11.3(eslint@8.56.0)
-      eslint-plugin-only-warn:
-        specifier: 1.1.0
-        version: 1.1.0
-      typescript:
-        specifier: 5.3.3
-        version: 5.3.3
-
-  packages/server:
+  packages/app-proxy-server:
     dependencies:
       '@fastify/cookie':
         specifier: 9.1.0
@@ -172,6 +148,30 @@ importers:
       typescript:
         specifier: 5.2.2
         version: 5.2.2
+
+  packages/eslint-config:
+    devDependencies:
+      '@typescript-eslint/eslint-plugin':
+        specifier: 6.17.0
+        version: 6.17.0(@typescript-eslint/parser@6.17.0)(eslint@8.56.0)(typescript@5.3.3)
+      '@typescript-eslint/parser':
+        specifier: 6.17.0
+        version: 6.17.0(eslint@8.56.0)(typescript@5.3.3)
+      '@vercel/style-guide':
+        specifier: 5.1.0
+        version: 5.1.0(eslint@8.56.0)(prettier@3.1.1)(typescript@5.3.3)
+      eslint-config-prettier:
+        specifier: 9.1.0
+        version: 9.1.0(eslint@8.56.0)
+      eslint-config-turbo:
+        specifier: 1.11.3
+        version: 1.11.3(eslint@8.56.0)
+      eslint-plugin-only-warn:
+        specifier: 1.1.0
+        version: 1.1.0
+      typescript:
+        specifier: 5.3.3
+        version: 5.3.3
 
   packages/typescript-config: {}
 
@@ -2482,19 +2482,19 @@ packages:
       '@pandacss/shared': 0.27.2
       '@pandacss/token-dictionary': 0.27.2
       '@pandacss/types': 0.27.2
-      autoprefixer: 10.4.15(postcss@8.4.31)
+      autoprefixer: 10.4.15(postcss@8.4.33)
       browserslist: 4.22.2
       hookable: 5.5.3
       lightningcss: 1.23.0
       lodash.merge: 4.6.2
       outdent: 0.8.0
-      postcss: 8.4.31
-      postcss-discard-duplicates: 6.0.1(postcss@8.4.31)
-      postcss-discard-empty: 6.0.1(postcss@8.4.31)
-      postcss-merge-rules: 6.0.3(postcss@8.4.31)
-      postcss-minify-selectors: 6.0.2(postcss@8.4.31)
-      postcss-nested: 6.0.1(postcss@8.4.31)
-      postcss-normalize-whitespace: 6.0.1(postcss@8.4.31)
+      postcss: 8.4.33
+      postcss-discard-duplicates: 6.0.1(postcss@8.4.33)
+      postcss-discard-empty: 6.0.1(postcss@8.4.33)
+      postcss-merge-rules: 6.0.3(postcss@8.4.33)
+      postcss-minify-selectors: 6.0.2(postcss@8.4.33)
+      postcss-nested: 6.0.1(postcss@8.4.33)
+      postcss-normalize-whitespace: 6.0.1(postcss@8.4.33)
       postcss-selector-parser: 6.0.15
       ts-pattern: 5.0.5
     dev: true
@@ -2545,7 +2545,7 @@ packages:
       javascript-stringify: 2.1.0
       outdent: 0.8.0
       pluralize: 8.0.0
-      postcss: 8.4.31
+      postcss: 8.4.33
       ts-pattern: 5.0.5
     dev: true
 
@@ -5036,7 +5036,7 @@ packages:
       '@vue/shared': 3.3.4
       estree-walker: 2.0.2
       magic-string: 0.30.5
-      postcss: 8.4.31
+      postcss: 8.4.33
       source-map-js: 1.0.2
     dev: true
 
@@ -5567,7 +5567,7 @@ packages:
     engines: {node: '>=8.0.0'}
     dev: false
 
-  /autoprefixer@10.4.15(postcss@8.4.31):
+  /autoprefixer@10.4.15(postcss@8.4.33):
     resolution: {integrity: sha512-KCuPB8ZCIqFdA4HwKXsvz7j6gvSDNhDP7WnUjBleRkKjPdvCmHFuQ77ocavI8FT6NdvlBnE2UFr2H4Mycn8Vew==}
     engines: {node: ^10 || ^12 || >=14}
     hasBin: true
@@ -5579,7 +5579,7 @@ packages:
       fraction.js: 4.3.7
       normalize-range: 0.1.2
       picocolors: 1.0.0
-      postcss: 8.4.31
+      postcss: 8.4.33
       postcss-value-parser: 4.2.0
     dev: true
 
@@ -6474,13 +6474,13 @@ packages:
     hasBin: true
     dev: true
 
-  /cssnano-utils@4.0.1(postcss@8.4.31):
+  /cssnano-utils@4.0.1(postcss@8.4.33):
     resolution: {integrity: sha512-6qQuYDqsGoiXssZ3zct6dcMxiqfT6epy7x4R0TQJadd4LWO3sPR6JH6ZByOvVLoZ6EdwPGgd7+DR1EmX3tiXQQ==}
     engines: {node: ^14 || ^16 || >=18.0}
     peerDependencies:
       postcss: ^8.4.31
     dependencies:
-      postcss: 8.4.31
+      postcss: 8.4.33
     dev: true
 
   /csstype@3.1.2:
@@ -9472,15 +9472,9 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /lru-cache@10.1.0:
-    resolution: {integrity: sha512-/1clY/ui8CzjKFyjdvwPWJUYKiFVXG2I2cY0ssG7h4+hwk+XOIX7ZSG9Q7TW8TW3Kp3BUSqgFWBLgL4PJ+Blag==}
-    engines: {node: 14 || >=16.14}
-    dev: true
-
   /lru-cache@10.2.0:
     resolution: {integrity: sha512-2bIM8x+VAf6JT4bKAljS1qUWgMsqZRPGJS6FSahIMPVvctcNhyVp7AJu7quxOW9jwkryBReKZY5tY5JYv2n/7Q==}
     engines: {node: 14 || >=16.14}
-    dev: false
 
   /lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
@@ -10317,7 +10311,7 @@ packages:
     resolution: {integrity: sha512-MkhCqzzBEpPvxxQ71Md0b1Kk51W01lrYvlMzSUaIzNsODdd7mqhiimSZlr+VegAz5Z6Vzt9Xg2ttE//XBhH3EQ==}
     engines: {node: '>=16 || 14 >=14.17'}
     dependencies:
-      lru-cache: 10.1.0
+      lru-cache: 10.2.0
       minipass: 7.0.4
     dev: true
 
@@ -10488,22 +10482,22 @@ packages:
       '@babel/runtime': 7.23.2
     dev: true
 
-  /postcss-discard-duplicates@6.0.1(postcss@8.4.31):
+  /postcss-discard-duplicates@6.0.1(postcss@8.4.33):
     resolution: {integrity: sha512-1hvUs76HLYR8zkScbwyJ8oJEugfPV+WchpnA+26fpJ7Smzs51CzGBHC32RS03psuX/2l0l0UKh2StzNxOrKCYg==}
     engines: {node: ^14 || ^16 || >=18.0}
     peerDependencies:
       postcss: ^8.4.31
     dependencies:
-      postcss: 8.4.31
+      postcss: 8.4.33
     dev: true
 
-  /postcss-discard-empty@6.0.1(postcss@8.4.31):
+  /postcss-discard-empty@6.0.1(postcss@8.4.33):
     resolution: {integrity: sha512-yitcmKwmVWtNsrrRqGJ7/C0YRy53i0mjexBDQ9zYxDwTWVBgbU4+C9jIZLmQlTDT9zhml+u0OMFJh8+31krmOg==}
     engines: {node: ^14 || ^16 || >=18.0}
     peerDependencies:
       postcss: ^8.4.31
     dependencies:
-      postcss: 8.4.31
+      postcss: 8.4.33
     dev: true
 
   /postcss-load-config@4.0.2:
@@ -10538,7 +10532,7 @@ packages:
       - typescript
     dev: true
 
-  /postcss-merge-rules@6.0.3(postcss@8.4.31):
+  /postcss-merge-rules@6.0.3(postcss@8.4.33):
     resolution: {integrity: sha512-yfkDqSHGohy8sGYIJwBmIGDv4K4/WrJPX355XrxQb/CSsT4Kc/RxDi6akqn5s9bap85AWgv21ArcUWwWdGNSHA==}
     engines: {node: ^14 || ^16 || >=18.0}
     peerDependencies:
@@ -10546,18 +10540,18 @@ packages:
     dependencies:
       browserslist: 4.22.2
       caniuse-api: 3.0.0
-      cssnano-utils: 4.0.1(postcss@8.4.31)
-      postcss: 8.4.31
+      cssnano-utils: 4.0.1(postcss@8.4.33)
+      postcss: 8.4.33
       postcss-selector-parser: 6.0.15
     dev: true
 
-  /postcss-minify-selectors@6.0.2(postcss@8.4.31):
+  /postcss-minify-selectors@6.0.2(postcss@8.4.33):
     resolution: {integrity: sha512-0b+m+w7OAvZejPQdN2GjsXLv5o0jqYHX3aoV0e7RBKPCsB7TYG5KKWBFhGnB/iP3213Ts8c5H4wLPLMm7z28Sg==}
     engines: {node: ^14 || ^16 || >=18.0}
     peerDependencies:
       postcss: ^8.4.31
     dependencies:
-      postcss: 8.4.31
+      postcss: 8.4.33
       postcss-selector-parser: 6.0.15
     dev: true
 
@@ -10602,23 +10596,23 @@ packages:
       postcss: 8.4.33
     dev: true
 
-  /postcss-nested@6.0.1(postcss@8.4.31):
+  /postcss-nested@6.0.1(postcss@8.4.33):
     resolution: {integrity: sha512-mEp4xPMi5bSWiMbsgoPfcP74lsWLHkQbZc3sY+jWYd65CUwXrUaTp0fmNpa01ZcETKlIgUdFN/MpS2xZtqL9dQ==}
     engines: {node: '>=12.0'}
     peerDependencies:
       postcss: ^8.2.14
     dependencies:
-      postcss: 8.4.31
+      postcss: 8.4.33
       postcss-selector-parser: 6.0.15
     dev: true
 
-  /postcss-normalize-whitespace@6.0.1(postcss@8.4.31):
+  /postcss-normalize-whitespace@6.0.1(postcss@8.4.33):
     resolution: {integrity: sha512-76i3NpWf6bB8UHlVuLRxG4zW2YykF9CTEcq/9LGAiz2qBuX5cBStadkk0jSkg9a9TCIXbMQz7yzrygKoCW9JuA==}
     engines: {node: ^14 || ^16 || >=18.0}
     peerDependencies:
       postcss: ^8.4.31
     dependencies:
-      postcss: 8.4.31
+      postcss: 8.4.33
       postcss-value-parser: 4.2.0
     dev: true
 
@@ -11323,7 +11317,7 @@ packages:
       adjust-sourcemap-loader: 4.0.0
       convert-source-map: 1.9.0
       loader-utils: 2.0.4
-      postcss: 8.4.31
+      postcss: 8.4.33
       source-map: 0.6.1
     dev: true
 
