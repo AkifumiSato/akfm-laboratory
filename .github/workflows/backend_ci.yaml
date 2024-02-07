@@ -1,8 +1,7 @@
-name: CI
+name: Backend CI
 on:
   push:
     branches:
-      - master
       - main
   pull_request:
 
@@ -31,7 +30,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: fmt
-          args: --all -- --check
+          args: --manifest-path backend/api/Cargo.toml --all -- --check
 
   clippy:
     name: Run Clippy
@@ -54,7 +53,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
+          args: --manifest-path backend/api/Cargo.toml --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
 
   test:
     name: Run Tests
@@ -64,15 +63,6 @@ jobs:
       contents: read
 
     services:
-      redis:
-        image: redis
-        options: >-
-          --health-cmd "redis-cli ping"
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - "6379:6379"
       postgres:
         image: postgres
         env:
@@ -101,7 +91,6 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --all-features --all
+          args: --manifest-path backend/api/Cargo.toml --all-features --all
         env:
-          REDIS_URL: redis://localhost:${{job.services.redis.ports[6379]}}
           DATABASE_URL: postgres://postgress:postgress@localhost:5432/postgress_test
