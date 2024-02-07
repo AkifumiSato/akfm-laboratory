@@ -9,8 +9,16 @@
 - [x] redis session
 - [x] redis cache handler
 - [ ] User api(REST)
-  - [ ] user id setting
-  - [ ] icon saving
+  - [ ] `/users`
 - [ ] GraphQL server
 - [ ] pages with graphql
-- [ ] document post
+- [ ] `/posts`
+
+## start
+
+```sh
+# redis, redis-stack serve
+$ docker compose up
+# development
+$ pnpm dev
+```
