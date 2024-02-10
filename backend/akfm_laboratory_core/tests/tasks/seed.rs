@@ -16,7 +16,7 @@
 use std::collections::BTreeMap;
 
 use loco_rs::{db, prelude::*};
-use api::app::App;
+use akfm_laboratory_core::app::App;
 use migration::Migrator;
 
 #[allow(clippy::module_name_repetitions)]

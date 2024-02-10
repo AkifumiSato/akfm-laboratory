@@ -1,6 +1,6 @@
 use insta::{assert_debug_snapshot, with_settings};
 use loco_rs::testing;
-use api::{app::App, models::users};
+use akfm_laboratory_core::{app::App, models::users};
 use rstest::rstest;
 use serial_test::serial;
 

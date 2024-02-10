@@ -86,7 +86,7 @@ mailer:
 # Database Configuration
 database:
   # Database connection URI
-  uri: {{ get_env(name="DATABASE_URL", default="postgres://akfm:akfm@localhost:5432/api_development") }}
+  uri: {{ get_env(name="DATABASE_URL", default="postgres://akfm:akfm@localhost:5432/akfm_laboratory_core_development") }}
   # When enabled, the sql query will be logged.
   enable_logging: false
   # Set the timeout duration when acquiring a connection.
@@ -116,7 +116,7 @@ auth:
   # JWT authentication
   jwt:
     # Secret key for token generation and verification
-    secret: lgtopcDaNHFCkSlZVHlS
+    secret: OQ23bNkqVUeMduTgKHOe
     # Token expiration time in seconds
     expiration: 604800 # 7 days
 

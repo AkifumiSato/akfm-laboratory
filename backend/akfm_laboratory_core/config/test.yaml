@@ -15,7 +15,7 @@ logger:
 # Web server configuration
 server:
   # Port on which the server will listen. the server binding is 0.0.0.0:{PORT}
-  port: 3001
+  port: 3000
   # The UI hostname or IP address that mailers will point to.
   host: http://localhost
   # Out of the box middleware configuration. to disable middleware you can changed the `enable` field to `false` of comment the middleware block
@@ -82,7 +82,7 @@ mailer:
 # Database Configuration
 database:
   # Database connection URI
-  uri: {{get_env(name="DATABASE_URL", default="postgres://akfm:akfm@localhost:5432/api_test")}}
+  uri: {{get_env(name="DATABASE_URL", default="postgres://loco:loco@localhost:5432/akfm_laboratory_core_test")}} 
   # When enabled, the sql query will be logged.
   enable_logging: false
   # Set the timeout duration when acquiring a connection.
@@ -112,7 +112,7 @@ auth:
   # JWT authentication
   jwt:
     # Secret key for token generation and verification
-    secret: SKbu2t52nKj7hpoQNn1c
+    secret: fR85dIuZVg9rdS9n0UeS
     # Token expiration time in seconds
     expiration: 604800 # 7 days
 

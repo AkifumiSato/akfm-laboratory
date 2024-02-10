@@ -1,7 +1,7 @@
 use eyre::Context;
 #[allow(unused_imports)]
 use loco_rs::{cli::playground, prelude::*};
-use api::app::App;
+use akfm_laboratory_core::app::App;
 
 #[tokio::main]
 async fn main() -> eyre::Result<()> {

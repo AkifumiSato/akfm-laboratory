@@ -1,5 +1,5 @@
 use loco_rs::cli;
-use api::app::App;
+use akfm_laboratory_core::app::App;
 use migration::Migrator;
 
 #[tokio::main]
