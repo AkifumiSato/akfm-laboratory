@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@fastify/cookie": "9.1.0",
+    "@fastify/multipart": "8.1.0",
     "@fastify/oauth2": "7.5.0",
     "@fastify/session": "10.5.0",
     "connect-redis": "7.1.1",

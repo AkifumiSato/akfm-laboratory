@@ -2,6 +2,7 @@ import Fastify from "fastify";
 import next from "next";
 import fastifyCookie from "@fastify/cookie";
 import fastifySession from "@fastify/session";
+import multipart from "@fastify/multipart";
 import { githubAuthPlugin } from "./github-auth-plugin";
 import { healthCheckPlugin } from "./health-check-plugin";
 import * as v from "valibot";
@@ -29,6 +30,7 @@ try {
 // prepare fastify
 const fastify = Fastify();
 
+fastify.register(multipart);
 fastify.register(healthCheckPlugin);
 fastify.register(fastifyCookie);
 fastify.register(fastifySession, {
