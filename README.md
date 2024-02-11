@@ -8,17 +8,38 @@
 - [x] dynamic rendering page add
 - [x] redis session
 - [x] redis cache handler
-- [ ] User api(REST)
-  - [ ] `/users`
+- [ ] core api(REST)
+  - [ ] docker-composeの整理
+  - [ ] APIの挙動確認
+  - [ ] FE部分と接続
+  - [ ] `/posts`
 - [ ] GraphQL server
 - [ ] pages with graphql
-- [ ] `/posts`
 
 ## start
+
+### redis, redis-stack, postgres
 
 ```sh
 # redis, redis-stack serve
 $ docker compose up
-# development
+```
+
+### api server
+
+```shell
+$ cd backend/akfm_laboratory_core
+$ cargo loco start
+```
+
+### web server
+
+```shell
+# ./
 $ pnpm dev
 ```
+
+## localhost
+
+- web: http://localhost:3000
+- redis-stack: http://localhost:8001
