@@ -79,6 +79,12 @@ export default function RootLayout({
                 <NavLink href="/dynamic_rendering">dynamic_rendering</NavLink>
               </li>
               <li>
+                <NavLink href="/signup">sign up</NavLink>
+              </li>
+              <li>
+                <NavLink href="/signin">sign in</NavLink>
+              </li>
+              <li>
                 <NavLink href="/login/github">github sign in</NavLink>
               </li>
             </ul>

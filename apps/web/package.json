@@ -12,6 +12,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@ark-ui/react": "2.0.2",
     "@neshca/cache-handler": "0.6.10",
     "@repo/app-proxy-server": "workspace:*",
     "next": "14.1.0",

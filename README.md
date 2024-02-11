@@ -9,9 +9,10 @@
 - [x] redis session
 - [x] redis cache handler
 - [ ] core api(REST)
-  - [ ] docker-composeの整理
+  - [x] docker-composeの整理
   - [ ] APIの挙動確認
   - [ ] FE部分と接続
+  - [ ] github認証を置き換えて削除
   - [ ] `/posts`
 - [ ] GraphQL server
 - [ ] pages with graphql
