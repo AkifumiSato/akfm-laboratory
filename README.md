@@ -10,8 +10,10 @@
 - [x] redis cache handler
 - [ ] core api(REST)
   - [x] docker-composeの整理
-  - [ ] APIの挙動確認
+  - [x] APIの挙動確認
   - [ ] FE部分と接続
+  - [ ] test
+  - [ ] OpenAPI
   - [ ] github認証を置き換えて削除
   - [ ] `/posts`
 - [ ] GraphQL server

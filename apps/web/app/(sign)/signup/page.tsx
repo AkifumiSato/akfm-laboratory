@@ -4,14 +4,30 @@ import { css } from "@/styled-system/css";
 import { stack } from "@/styled-system/patterns";
 import type { JSX } from "react";
 import { Prose } from "@/components/prose";
+import { coreApiUrl } from "../../lib/api-url";
 import { Password } from "./password";
 
 export default function Page(): JSX.Element {
   async function action(data: FormData) {
     "use server";
 
+    // todo: validation
+    const user = {
+      name: data.get("name"),
+      email: data.get("email"),
+      password: data.get("password"),
+    };
+    // todo: fetcher
+    const response = await fetch(`${coreApiUrl}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(user),
+    });
+
     // fix: fastify does not support server actions
-    console.log("action", data);
+    console.log("action", response.status, await response.json());
   }
 
   return (
