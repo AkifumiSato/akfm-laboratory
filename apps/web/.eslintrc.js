@@ -6,5 +6,5 @@ module.exports = {
   parserOptions: {
     project: true,
   },
-  ignorePatterns: ["styled-system/**/*", "cache-handler.js"],
+  ignorePatterns: ["styled-system/**/*", "cache-handler.js", "jest.config.js"],
 };
