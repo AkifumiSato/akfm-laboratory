@@ -26,7 +26,6 @@ export default function Page(): JSX.Element {
       body: JSON.stringify(user),
     });
 
-    // fix: fastify does not support server actions
     console.log("action", response.status, await response.json());
   }
 
