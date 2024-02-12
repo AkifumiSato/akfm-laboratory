@@ -11,13 +11,14 @@
 - [ ] core api(REST)
   - [x] docker-composeの整理
   - [x] APIの挙動確認
-  - [ ] APIで全てのusersを取得するエンドポイントの実装
+  - [x] APIで全てのusersを取得するエンドポイントの実装
   - [ ] test
   - [ ] OpenAPI
   - [ ] github認証を置き換えて削除
   - [ ] `/posts`
 - [ ] GraphQL server
 - [ ] pages with graphql
+- [ ] Biome
 
 ## start
 
