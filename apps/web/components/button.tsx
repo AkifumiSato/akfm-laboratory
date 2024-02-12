@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { cva } from "@/styled-system/css";
+import { cva } from "../styled-system/css";
 
 export const button = cva({
   base: {

@@ -1,5 +1,5 @@
-import { css } from "@/styled-system/css";
-import type { SystemStyleObject } from "@/styled-system/types";
+import type { SystemStyleObject } from "@pandacss/dev";
+import { css } from "../styled-system/css";
 
 type Props = React.ComponentPropsWithoutRef<"div"> & {
   mergeCss?: SystemStyleObject;

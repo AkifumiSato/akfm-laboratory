@@ -1,8 +1,8 @@
 import "./globals.css";
-import { css } from "@/styled-system/css";
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { JSX } from "react";
+import { css } from "../styled-system/css";
 import { NavLink } from "./nav-link";
 
 export const metadata: Metadata = {

@@ -1,6 +1,6 @@
-import { css } from "@/styled-system/css";
 import type { JSX } from "react";
 import { Prose } from "@/components/prose";
+import { css } from "../styled-system/css";
 
 export default function Page(): JSX.Element {
   return (

@@ -1,6 +1,6 @@
-import { stack } from "@/styled-system/patterns";
 import type { JSX } from "react";
 import { Prose } from "@/components/prose";
+import { stack } from "../../../styled-system/patterns";
 
 export default function Page(): JSX.Element {
   return (

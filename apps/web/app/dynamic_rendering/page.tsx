@@ -1,7 +1,7 @@
-import { css } from "@/styled-system/css";
-import { stack } from "@/styled-system/patterns";
 import type { JSX } from "react";
 import { Prose } from "@/components/prose";
+import { css } from "../../styled-system/css";
+import { stack } from "../../styled-system/patterns";
 
 export default function Page(): JSX.Element {
   const random = Math.random();

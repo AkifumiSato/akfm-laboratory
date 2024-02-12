@@ -1,8 +1,8 @@
 "use client";
 
 import { InputText } from "@/components/input-text";
-import { css } from "@/styled-system/css";
 import { useState } from "react";
+import { css } from "../../../styled-system/css";
 
 export function Password({ name }: { name: string }) {
   const [visible, setVisible] = useState(false);
