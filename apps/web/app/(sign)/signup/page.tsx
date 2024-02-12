@@ -4,6 +4,7 @@ import { css } from "@/styled-system/css";
 import { stack } from "@/styled-system/patterns";
 import type { JSX } from "react";
 import { Prose } from "@/components/prose";
+import { Password } from "./password";
 
 export default function Page(): JSX.Element {
   async function action(data: FormData) {
@@ -38,15 +39,15 @@ export default function Page(): JSX.Element {
                 <div className={stack({ gap: "5" })}>
                   <label className={labelStyle}>
                     User Name
-                    <InputText type="text" id="name" name="name" />
+                    <InputText type="text" name="name" />
                   </label>
                   <label className={labelStyle}>
                     Email
-                    <InputText type="email" id="email" name="email" />
+                    <InputText type="email" name="email" />
                   </label>
                   <label className={labelStyle}>
                     Password
-                    <InputText type="password" id="password" name="password" />
+                    <Password name="password" />
                   </label>
                 </div>
                 <Button color="blue">Sign up</Button>

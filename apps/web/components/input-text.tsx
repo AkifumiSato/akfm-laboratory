@@ -12,6 +12,7 @@ export const input = cva({
     outlineWidth: "1px",
     outlineColor: "gray.300",
     outlineStyle: "solid",
+    width: "100%",
     _focus: {
       outlineWidth: "2px",
       outlineColor: "blue.400",
