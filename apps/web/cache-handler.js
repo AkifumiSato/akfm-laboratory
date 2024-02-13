@@ -22,15 +22,14 @@ IncrementalCache.onCreation(async () => {
   // https://github.com/caching-tools/next-shared-cache/issues/284
   let redisCache;
   try {
-    if (!client.isOpen || !client.isReady) {
+    if (process.env.REDIS_AVAILABLE) {
       await client.connect();
+      redisCache = await createRedisCache({
+        client,
+        useTtl,
+        timeoutMs: 5000,
+      });
     }
-
-    redisCache = await createRedisCache({
-      client,
-      useTtl,
-      timeoutMs: 5000,
-    });
   } catch (error) {
     // If we encounter an error with `client.connect()`, then `redisCache` will be undefined
     // and will be skipped as a cache handler, defaulting to the local LRU cache
