@@ -4,7 +4,7 @@ import { InputText } from "@/components/input-text";
 import { useState } from "react";
 import { css } from "../../../styled-system/css";
 
-export function Password({ name }: { name: string }) {
+export function Password({ name, testId }: { name: string; testId: string }) {
   const [visible, setVisible] = useState(false);
 
   return (
@@ -13,7 +13,11 @@ export function Password({ name }: { name: string }) {
         position: "relative",
       })}
     >
-      <InputText type={visible ? "text" : "password"} name={name} />
+      <InputText
+        type={visible ? "text" : "password"}
+        name={name}
+        data-testid={testId}
+      />
       <button
         className={css({
           position: "absolute",

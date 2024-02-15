@@ -46,7 +46,7 @@ export function SingUpPagePresentation({
                   </label>
                   <label className={labelStyle}>
                     Password
-                    <Password name="password" />
+                    <Password name="password" testId="signup-password" />
                   </label>
                 </div>
                 <Button color="blue">Sign up</Button>
