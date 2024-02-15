@@ -5,6 +5,7 @@ import { css } from "../../../styled-system/css";
 import { stack } from "../../../styled-system/patterns";
 import { Password } from "./password";
 
+// todo: react-hook-form + realtime validation
 export function SingUpPagePresentation({
   action,
 }: {
