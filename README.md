@@ -14,7 +14,7 @@
   - [x] APIで全てのusersを取得するエンドポイントの実装
   - [ ] test
     - [x] sign up
-    - [ ] sign up e2e
+    - [x] sign up e2e
     - [ ] sign up validation
     - [ ] sign up success/failure
     - [ ] sign in

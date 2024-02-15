@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { SingUpPagePresentation } from "./page";
+
+import { SingUpPagePresentation } from "./presentation";
 
 describe("SingUpPagePresentation", () => {
   test("submit時のFormDataにname,email,passwordが含まれること", async () => {

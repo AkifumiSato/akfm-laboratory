@@ -10,5 +10,10 @@ module.exports = {
   parserOptions: {
     project: true,
   },
-  ignorePatterns: ["styled-system/**/*", "cache-handler.js", "jest.config.js"],
+  ignorePatterns: [
+    "styled-system/**/*",
+    "cache-handler.js",
+    "jest.config.js",
+    "playwright.config.ts",
+  ],
 };
