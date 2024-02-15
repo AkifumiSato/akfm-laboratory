@@ -15,7 +15,7 @@
   - [ ] test
     - [x] sign up
     - [x] sign up e2e
-    - [ ] sign up validation
+    - [x] sign up validation
     - [ ] sign up success/failure
     - [ ] sign in
   - [ ] OpenAPI

@@ -1,3 +1,5 @@
+use axum::http::StatusCode;
+use loco_rs::controller::ErrorDetail;
 use loco_rs::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -30,7 +32,7 @@ pub struct ResetParams {
 async fn register(
     State(ctx): State<AppContext>,
     Json(params): Json<RegisterParams>,
-) -> Result<Json<()>> {
+) -> Result<(StatusCode, Json<()>)> {
     let res = users::Model::create_with_password(&ctx.db, &params).await;
 
     let user = match res {
@@ -41,18 +43,22 @@ async fn register(
                 user_email = &params.email,
                 "could not register user",
             );
-            return format::json(());
+            return Err(Error::CustomError(
+                StatusCode::CONFLICT,
+                ErrorDetail::new(" could not register user", &format!("{}", err)),
+            ));
         }
     };
 
     let user = user
         .into_active_model()
         .set_email_verification_sent(&ctx.db)
-        .await?;
+        .await
+        .or(Err(Error::InternalServerError));
 
-    AuthMailer::send_welcome(&ctx, &user).await?;
+    AuthMailer::send_welcome(&ctx, &user.unwrap()).await?;
 
-    format::json(())
+    Ok((StatusCode::OK, Json(())))
 }
 
 /// Verify register user. if the user not verified his email, he can't login to
