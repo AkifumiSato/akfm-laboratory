@@ -48,6 +48,36 @@ async fn can_register() {
     .await;
 }
 
+#[tokio::test]
+#[serial]
+async fn already_register_error() {
+    configure_insta!();
+
+    testing::request::<App, _, _>(|request, ctx| async move {
+        let email = "test@loco.com";
+        let payload = serde_json::json!({
+            "name": "loco",
+            "email": email,
+            "password": "12341234"
+        });
+
+        let response = request.post("/api/auth/register").json(&payload).await;
+        let _saved_user = users::Model::find_by_email(&ctx.db, email).await;
+
+        assert_eq!(response.status_code(), 200);
+
+        // already registered
+        let response = request.post("/api/auth/register").json(&payload).await;
+
+        with_settings!({
+            filters => testing::cleanup_user_model()
+        }, {
+            assert_debug_snapshot!((response.status_code(), response.text()));
+        });
+    })
+    .await;
+}
+
 #[rstest]
 #[case("login_with_valid_password", "12341234")]
 #[case("login_with_invalid_password", "invalid-password")]
