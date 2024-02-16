@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - api-ci # test
   pull_request:
 
 env:
