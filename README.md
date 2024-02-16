@@ -18,6 +18,7 @@
     - [x] sign up validation
     - [x] sign up success/failure
     - [ ] sign in
+      - [ ] forgetのメールが届かない問題
   - [ ] OpenAPI
   - [ ] github認証を置き換えて削除
   - [ ] `/posts`
