@@ -89,7 +89,7 @@ async fn forgot(
 ) -> Result<Json<()>> {
     let Ok(user) = users::Model::find_by_email(&ctx.db, &params.email).await else {
         // we don't want to expose our users email. if the email is invalid we still
-        // returning success to the caller
+        // return success to the caller
         return format::json(());
     };
 

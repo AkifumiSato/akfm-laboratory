@@ -18,3 +18,9 @@ $ docker run -p 5432:5432 -e POSTGRES_USER=akfm -e POSTGRES_DB=akfm_laboratory_c
 ### test
 
 GET: http://localhost:3001/api/_health
+
+### with mailer
+
+```shell
+$ cargo loco start --worker
+```

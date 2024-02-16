@@ -37,6 +37,12 @@ services:
       - POSTGRES_DB=akfm_laboratory_core_test
       - POSTGRES_USER=akfm
       - POSTGRES_PASSWORD=akfm
+  mailer:
+    image: mailtutan/mailtutan:latest
+    restart: unless-stopped
+    ports:
+      - 1080:1080
+      - 1025:1025
 volumes:
   akfm-laboratory-session-redis:
     driver: local
