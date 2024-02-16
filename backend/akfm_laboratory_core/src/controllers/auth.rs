@@ -1,6 +1,5 @@
 use axum::http::StatusCode;
-use loco_rs::controller::ErrorDetail;
-use loco_rs::prelude::*;
+use loco_rs::{controller::ErrorDetail, prelude::*};
 use serde::{Deserialize, Serialize};
 
 use crate::{
@@ -45,7 +44,7 @@ async fn register(
             );
             return Err(Error::CustomError(
                 StatusCode::CONFLICT,
-                ErrorDetail::new(" could not register user", &format!("{}", err)),
+                ErrorDetail::new(" could not register user", &err.to_string()),
             ));
         }
     };

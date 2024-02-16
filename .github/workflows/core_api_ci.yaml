@@ -1,8 +1,7 @@
-name: CI
+name: Core API CI
 on:
   push:
     branches:
-      - master
       - main
   pull_request:
 
@@ -31,7 +30,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: fmt
-          args: --all -- --check
+          args: --manifest-path backend/akfm_laboratory_core/Cargo.toml --all -- --check
 
   clippy:
     name: Run Clippy
@@ -54,7 +53,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
+          args: --manifest-path backend/akfm_laboratory_core/Cargo.toml --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
 
   test:
     name: Run Tests
@@ -76,11 +75,11 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_DB: postgress_test
-          POSTGRES_USER: postgress
-          POSTGRES_PASSWORD: postgress
+          POSTGRES_DB: akfm_laboratory_core_test
+          POSTGRES_USER: akfm
+          POSTGRES_PASSWORD: akfm
         ports:
-          - "5432:5432"
+          - "5433:5432"
         # Set health checks to wait until postgres has started
         options: --health-cmd pg_isready
           --health-interval 10s
@@ -101,7 +100,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --all-features --all
+          args: --manifest-path backend/akfm_laboratory_core/Cargo.toml --all-features --all
         env:
           REDIS_URL: redis://localhost:${{job.services.redis.ports[6379]}}
-          DATABASE_URL: postgres://postgress:postgress@localhost:5432/postgress_test
+          DATABASE_URL: postgres://akfm:akfm@localhost:5433/akfm_laboratory_core_test

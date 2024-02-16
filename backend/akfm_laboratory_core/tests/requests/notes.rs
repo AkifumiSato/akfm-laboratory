@@ -1,6 +1,6 @@
+use akfm_laboratory_core::{app::App, models::_entities::notes::Entity};
 use insta::{assert_debug_snapshot, with_settings};
 use loco_rs::testing;
-use akfm_laboratory_core::{app::App, models::_entities::notes::Entity};
 use sea_orm::entity::prelude::*;
 use serial_test::serial;
 

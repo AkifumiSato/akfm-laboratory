@@ -2,6 +2,13 @@
 
 ## Quick start
 
+### `rust -V`
+
+```sh
+$ rustc -V
+# 1.78.0-nightly (a4472498d 2024-02-15)
+```
+
 ### boot db
 
 ```shell
