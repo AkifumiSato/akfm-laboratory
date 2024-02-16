@@ -17,7 +17,7 @@ describe("SingUpPagePresentation", () => {
       screen.getByRole("textbox", { name: "Email" }),
       "akfm.sato@gmail.com",
     );
-    await user.type(screen.getByTestId("signup-password"), "test password");
+    await user.type(screen.getByLabelText("Password"), "test password");
     // Act
     await user.click(screen.getByRole("button", { name: "Sign up" }));
     // Assert

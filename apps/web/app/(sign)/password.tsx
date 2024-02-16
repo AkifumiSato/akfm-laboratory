@@ -28,6 +28,7 @@ export function Password({ name, testId }: { name: string; testId: string }) {
           color: "gray.500",
           cursor: "pointer",
         })}
+        type="button"
         onClick={() => setVisible((prev) => !prev)}
       >
         show
