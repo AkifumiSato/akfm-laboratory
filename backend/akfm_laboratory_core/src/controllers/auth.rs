@@ -1,6 +1,5 @@
 use axum::http::StatusCode;
-use loco_rs::controller::ErrorDetail;
-use loco_rs::prelude::*;
+use loco_rs::{controller::ErrorDetail, prelude::*};
 use serde::{Deserialize, Serialize};
 
 use crate::{
