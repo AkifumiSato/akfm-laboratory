@@ -44,7 +44,7 @@ async fn register(
             );
             return Err(Error::CustomError(
                 StatusCode::CONFLICT,
-                ErrorDetail::new(" could not register user", &format!("{}", err)),
+                ErrorDetail::new(" could not register user", &err.to_string()),
             ));
         }
     };
