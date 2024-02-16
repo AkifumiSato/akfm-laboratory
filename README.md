@@ -16,7 +16,7 @@
     - [x] sign up
     - [x] sign up e2e
     - [x] sign up validation
-    - [ ] sign up success/failure
+    - [x] sign up success/failure
     - [ ] sign in
   - [ ] OpenAPI
   - [ ] github認証を置き換えて削除

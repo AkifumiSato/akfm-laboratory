@@ -2,7 +2,7 @@
 
 import { InputText } from "@/components/input-text";
 import { useState } from "react";
-import { css } from "../../../styled-system/css";
+import { css } from "../../styled-system/css";
 
 export function Password({ name, testId }: { name: string; testId: string }) {
   const [visible, setVisible] = useState(false);

@@ -6,7 +6,7 @@ import { stack } from "../../../styled-system/patterns";
 import { Password } from "../password";
 
 // todo: react-hook-form + realtime validation
-export function SingUpPagePresentation({
+export function SingInPagePresentation({
   action,
 }: {
   // eslint-disable-next-line no-unused-vars
@@ -15,7 +15,7 @@ export function SingUpPagePresentation({
   return (
     <main className={stack({ gap: "10" })}>
       <Prose>
-        <h1>Sign up</h1>
+        <h1>Sign in</h1>
         <div
           className={stack({
             width: "100%",
@@ -35,19 +35,15 @@ export function SingUpPagePresentation({
               <div className={stack({ gap: "10" })}>
                 <div className={stack({ gap: "5" })}>
                   <label className={labelStyle}>
-                    User Name
-                    <InputText type="text" name="name" />
-                  </label>
-                  <label className={labelStyle}>
                     Email
                     <InputText type="email" name="email" />
                   </label>
                   <label className={labelStyle}>
                     Password
-                    <Password name="password" testId="signup-password" />
+                    <Password name="password" testId="signin-password" />
                   </label>
                 </div>
-                <Button color="blue">Sign up</Button>
+                <Button color="blue">Sign in</Button>
               </div>
             </form>
           </div>
