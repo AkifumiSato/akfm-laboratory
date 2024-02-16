@@ -26,7 +26,19 @@ services:
       - POSTGRES_DB=akfm_laboratory_core_development
       - POSTGRES_USER=akfm
       - POSTGRES_PASSWORD=akfm
+  db_test:
+    image: postgres:15.3-alpine
+    container_name: akfm_laboratory_postgres_core_test
+    ports:
+      - 5433:5432
+    volumes:
+      - akfm-laboratory-core-db-test-store:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=akfm_laboratory_core_test
+      - POSTGRES_USER=akfm
+      - POSTGRES_PASSWORD=akfm
 volumes:
   akfm-laboratory-session-redis:
     driver: local
   akfm-laboratory-core-db-development-store:
+  akfm-laboratory-core-db-test-store:
