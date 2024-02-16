@@ -104,4 +104,4 @@ jobs:
           args: --manifest-path backend/akfm_laboratory_core/Cargo.toml --all-features --all
         env:
           REDIS_URL: redis://localhost:${{job.services.redis.ports[6379]}}
-          DATABASE_URL: postgres://akfm:akfm@localhost:5432/akfm_laboratory_core_test
+          DATABASE_URL: postgres://akfm:akfm@localhost:5433/akfm_laboratory_core_test
