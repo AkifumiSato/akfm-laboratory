@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { JSX } from "react";
 import { css } from "../styled-system/css";
 import { NavLink } from "./nav-link";
+import ScrollUp from "./scroll-up";
 
 export const metadata: Metadata = {
   title: "akfm laboratory",
@@ -18,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body>
+        <ScrollUp />
         <header
           className={css({
             position: "sticky",

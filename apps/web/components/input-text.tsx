@@ -1,5 +1,5 @@
 import type { JSX } from "react";
-import { cva } from "../styled-system/css";
+import { css, cva } from "../styled-system/css";
 
 export const input = cva({
   base: {
@@ -20,8 +20,32 @@ export const input = cva({
   },
 });
 
-type InputProps = JSX.IntrinsicElements["input"];
+type InputProps = JSX.IntrinsicElements["input"] & {
+  label?: string;
+  rightElement?: React.ReactNode;
+};
 
-export function InputText({ ...props }: InputProps) {
+export function InputText({ label, rightElement, ...props }: InputProps) {
+  if (label) {
+    return (
+      <label className={labelStyle}>
+        {label}
+        <span
+          className={css({
+            position: "relative",
+          })}
+        >
+          <input {...props} className={input()} />
+          {rightElement}
+        </span>
+      </label>
+    );
+  }
   return <input {...props} className={input()} />;
 }
+
+const labelStyle = css({
+  display: "flex",
+  flexDirection: "column",
+  rowGap: "1",
+});

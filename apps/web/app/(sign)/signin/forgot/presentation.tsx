@@ -2,12 +2,10 @@ import { Button } from "@/components/button";
 import { Card } from "@/components/card";
 import { InputText } from "@/components/input-text";
 import { Prose } from "@/components/prose";
-import Link from "next/link";
-import { stack } from "../../../styled-system/patterns";
-import { Password } from "../password";
+import { stack } from "../../../../styled-system/patterns";
 
 // todo: react-hook-form + realtime validation
-export function SingInPagePresentation({
+export function ForgotPasswordPresentation({
   action,
 }: {
   // eslint-disable-next-line no-unused-vars
@@ -16,7 +14,7 @@ export function SingInPagePresentation({
   return (
     <main className={stack({ gap: "10" })}>
       <Prose>
-        <h1>Sign in</h1>
+        <h1>Forget Password</h1>
         <form
           action={action}
           className={stack({
@@ -25,18 +23,8 @@ export function SingInPagePresentation({
           })}
         >
           <Card>
-            <div className={stack({ gap: "5" })}>
-              <InputText type="email" name="email" label="Email" />
-              <Password
-                name="password"
-                testId="signup-password"
-                label="Password"
-              />
-            </div>
-            <Button color="blue">Sign in</Button>
-            <div>
-              <Link href="/signin/forgot">forgot password?</Link>
-            </div>
+            <InputText type="email" name="email" label="Email" />
+            <Button color="dark">Send</Button>
           </Card>
         </form>
       </Prose>

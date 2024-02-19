@@ -1,7 +1,7 @@
 import { Button } from "@/components/button";
+import { Card } from "@/components/card";
 import { InputText } from "@/components/input-text";
 import { Prose } from "@/components/prose";
-import { css } from "../../../styled-system/css";
 import { stack } from "../../../styled-system/patterns";
 import { Password } from "../password";
 
@@ -16,49 +16,27 @@ export function SingUpPagePresentation({
     <main className={stack({ gap: "10" })}>
       <Prose>
         <h1>Sign up</h1>
-        <div
+        <form
+          action={action}
           className={stack({
             width: "100%",
             alignItems: "center",
           })}
         >
-          <div
-            className={css({
-              padding: "5",
-              boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
-              borderRadius: "5px",
-              width: "100%",
-              maxWidth: "600px",
-            })}
-          >
-            <form action={action}>
-              <div className={stack({ gap: "10" })}>
-                <div className={stack({ gap: "5" })}>
-                  <label className={labelStyle}>
-                    User Name
-                    <InputText type="text" name="name" />
-                  </label>
-                  <label className={labelStyle}>
-                    Email
-                    <InputText type="email" name="email" />
-                  </label>
-                  <label className={labelStyle}>
-                    Password
-                    <Password name="password" testId="signup-password" />
-                  </label>
-                </div>
-                <Button color="blue">Sign up</Button>
-              </div>
-            </form>
-          </div>
-        </div>
+          <Card>
+            <div className={stack({ gap: "5" })}>
+              <InputText type="text" name="name" label="User Name" />
+              <InputText type="email" name="email" label="Email" />
+              <Password
+                name="password"
+                testId="signup-password"
+                label="Password"
+              />
+            </div>
+            <Button color="blue">Sign up</Button>
+          </Card>
+        </form>
       </Prose>
     </main>
   );
 }
-
-const labelStyle = css({
-  display: "flex",
-  flexDirection: "column",
-  rowGap: "1",
-});

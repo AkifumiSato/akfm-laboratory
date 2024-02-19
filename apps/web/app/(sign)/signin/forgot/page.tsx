@@ -1,29 +1,26 @@
 import { redirect } from "next/navigation";
-import type { JSX } from "react";
+import { coreApiUrl } from "../../../lib/api-url";
+import { ForgotPasswordPresentation } from "./presentation";
 import * as v from "valibot";
-import { coreApiUrl } from "../../lib/api-url";
-import { SingInPagePresentation } from "./presentation";
 
-const signInFormSchema = v.object({
+const forgotPasswordFormSchema = v.object({
   email: v.string([v.email()]),
-  password: v.string([v.minLength(4), v.maxLength(100)]),
 });
 
-export default function Page(): JSX.Element {
+export default function Page() {
   async function action(data: FormData) {
     "use server";
 
     const user = {
       email: data.get("email"),
-      password: data.get("password"),
     };
-    const validatedUser = v.safeParse(signInFormSchema, user);
+    const validatedUser = v.safeParse(forgotPasswordFormSchema, user);
     if (validatedUser.issues && validatedUser.issues.length > 0) {
       console.error("issues", validatedUser.issues);
       throw new Error("Invalid form data");
     }
     // todo: fetcher
-    const response = await fetch(`${coreApiUrl}/auth/login`, {
+    const response = await fetch(`${coreApiUrl}/auth/forgot`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -33,11 +30,12 @@ export default function Page(): JSX.Element {
 
     if (response.status === 200) {
       console.log("action", response.status, await response.json());
+      // todo: redirect to send success page
       redirect("/");
     } else {
       console.error("action failed", response.status, await response.json());
     }
   }
 
-  return <SingInPagePresentation action={action} />;
+  return <ForgotPasswordPresentation action={action} />;
 }

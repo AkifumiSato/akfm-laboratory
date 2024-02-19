@@ -12,15 +12,10 @@
   - [x] docker-composeの整理
   - [x] APIの挙動確認
   - [x] APIで全てのusersを取得するエンドポイントの実装
-  - [ ] test
-    - [x] sign up
-    - [x] sign up e2e
-    - [x] sign up validation
-    - [x] sign up success/failure
-    - [ ] sign in
-      - [ ] forgetのメールが届かない問題
-  - [ ] OpenAPI
+  - [x] sign in test
+  - [ ] login session
   - [ ] github認証を置き換えて削除
+  - [ ] OpenAPI
   - [ ] `/posts`
 - [ ] GraphQL server
 - [ ] pages with graphql
@@ -39,7 +34,7 @@ $ docker compose up
 
 ```shell
 $ cd backend/akfm_laboratory_core
-$ cargo loco start
+$ cargo loco start --server-and-worker
 ```
 
 ### web server
@@ -53,4 +48,5 @@ $ pnpm dev
 
 - web: http://localhost:3000
 - core api: http://localhost:3001
+- mail debug: http://localhost:1080
 - redis-stack: http://localhost:8001
