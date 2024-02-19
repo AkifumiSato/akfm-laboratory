@@ -53,7 +53,9 @@ impl AuthMailer {
                 locals: json!({
                   "name": user.name,
                   "resetToken": user.reset_token,
-                  "domain": ctx.config.server.full_url()
+                  // todo: fix env url
+                  // fe url
+                  "domain": "localhost:3000".to_string()
                 }),
                 ..Default::default()
             },
