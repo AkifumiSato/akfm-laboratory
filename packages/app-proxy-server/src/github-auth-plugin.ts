@@ -46,8 +46,8 @@ const githubAuthPluginCallback: FastifyPluginAsync<{
       return;
     }
 
-    request.session.user = {
-      access_token: result.token.access_token,
+    request.session.currentUser = {
+      github_access_token: result.token.access_token,
     };
     await request.session.save();
     // todo: debug page remove

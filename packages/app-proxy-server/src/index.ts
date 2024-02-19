@@ -47,7 +47,7 @@ fastify.register(githubAuthPlugin, {
 // todo: debug page remove
 fastify.get("/debug", (request) => ({
   session: {
-    user: request.session.user,
+    currentUser: request.session.currentUser,
   },
 }));
 

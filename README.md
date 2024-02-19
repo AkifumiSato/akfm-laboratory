@@ -13,8 +13,8 @@
   - [x] APIの挙動確認
   - [x] APIで全てのusersを取得するエンドポイントの実装
   - [x] sign in test
-  - [ ] login session
-  - [ ] github認証を置き換えて削除
+  - [x] login session
+  - [ ] current user page
   - [ ] OpenAPI
   - [ ] `/posts`
 - [ ] GraphQL server

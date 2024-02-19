@@ -1,7 +1,9 @@
+import { RedirectType } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";
 import type { JSX } from "react";
 import * as v from "valibot";
 import { coreApiUrl } from "../../lib/api-url";
+import { getSession } from "../../lib/session";
 import { SingInPagePresentation } from "./presentation";
 
 const signInFormSchema = v.object({
@@ -32,8 +34,16 @@ export default function Page(): JSX.Element {
     });
 
     if (response.status === 200) {
-      console.log("action", response.status, await response.json());
-      redirect("/");
+      const { token } = (await response.json()) as { token: string };
+      const session = getSession();
+      if (!session) throw new Error("session not found");
+      session.currentUser = {
+        ...session.currentUser,
+        token,
+      };
+      await session.save();
+
+      redirect("/debug", RedirectType.replace);
     } else {
       console.error("action failed", response.status, await response.json());
     }
