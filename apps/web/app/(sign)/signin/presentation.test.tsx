@@ -13,7 +13,7 @@ describe("SingInPagePresentation", () => {
       screen.getByRole("textbox", { name: "Email" }),
       "akfm.sato@gmail.com",
     );
-    await user.type(screen.getByTestId("signin-password"), "test password");
+    await user.type(screen.getByLabelText("Password"), "test password");
     // Act
     await user.click(screen.getByRole("button", { name: "Sign in" }));
     // Assert
