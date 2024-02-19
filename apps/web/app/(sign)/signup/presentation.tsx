@@ -1,9 +1,9 @@
 import { Button } from "@/components/button";
 import { Card } from "@/components/card";
 import { InputText } from "@/components/input-text";
-import { Prose } from "@/components/prose";
 import { stack } from "../../../styled-system/patterns";
 import { Password } from "../password";
+import { Typography } from "@/components/typography";
 
 // todo: react-hook-form + realtime validation
 export function SingUpPagePresentation({
@@ -14,8 +14,8 @@ export function SingUpPagePresentation({
 }) {
   return (
     <main className={stack({ gap: "10" })}>
-      <Prose>
-        <h1>Sign up</h1>
+      <div className={stack({ rowGap: 5 })}>
+        <Typography tag="h1">Sign up</Typography>
         <form
           action={action}
           className={stack({
@@ -36,7 +36,7 @@ export function SingUpPagePresentation({
             <Button color="blue">Sign up</Button>
           </Card>
         </form>
-      </Prose>
+      </div>
     </main>
   );
 }

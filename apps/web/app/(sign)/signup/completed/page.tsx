@@ -1,19 +1,17 @@
 import Link from "next/link";
 import type { JSX } from "react";
-import { Prose } from "@/components/prose";
+import { stack } from "../../../../styled-system/patterns";
+import { Typography } from "@/components/typography";
 
-// todo: scroll to top
 export default function Page(): JSX.Element {
   return (
     <main>
-      <Prose>
-        <h1>Signup completed!</h1>
-        <ul>
-          <li>
-            <Link href="/">top page</Link>
-          </li>
-        </ul>
-      </Prose>
+      <div className={stack({ rowGap: 5 })}>
+        <Typography tag="h1">Signup completed!</Typography>
+        <div>
+          <Link href="/">top page</Link>
+        </div>
+      </div>
     </main>
   );
 }

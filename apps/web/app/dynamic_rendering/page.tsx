@@ -1,14 +1,14 @@
 import type { JSX } from "react";
-import { Prose } from "@/components/prose";
 import { css } from "../../styled-system/css";
 import { stack } from "../../styled-system/patterns";
+import { Typography } from "@/components/typography";
 
 export default function Page(): JSX.Element {
   const random = Math.random();
   return (
     <main className={stack({ gap: "10" })}>
-      <Prose>
-        <h1>Dynamic rendering page</h1>
+      <div className={stack({ rowGap: 5 })}>
+        <Typography tag="h1">Dynamic rendering page</Typography>
         <p>
           random:{" "}
           <span
@@ -20,7 +20,7 @@ export default function Page(): JSX.Element {
             {random}
           </span>
         </p>
-      </Prose>
+      </div>
     </main>
   );
 }

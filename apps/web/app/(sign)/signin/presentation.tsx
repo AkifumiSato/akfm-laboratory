@@ -1,10 +1,10 @@
 import { Button } from "@/components/button";
 import { Card } from "@/components/card";
 import { InputText } from "@/components/input-text";
-import { Prose } from "@/components/prose";
 import Link from "next/link";
 import { stack } from "../../../styled-system/patterns";
 import { Password } from "../password";
+import { Typography } from "@/components/typography";
 
 // todo: react-hook-form + realtime validation
 export function SingInPagePresentation({
@@ -15,8 +15,8 @@ export function SingInPagePresentation({
 }) {
   return (
     <main className={stack({ gap: "10" })}>
-      <Prose>
-        <h1>Sign in</h1>
+      <div className={stack({ rowGap: 5 })}>
+        <Typography tag="h1">Sign in</Typography>
         <form
           action={action}
           className={stack({
@@ -39,7 +39,7 @@ export function SingInPagePresentation({
             </div>
           </Card>
         </form>
-      </Prose>
+      </div>
     </main>
   );
 }
