@@ -39,7 +39,7 @@ $ docker compose up
 
 ```shell
 $ cd backend/akfm_laboratory_core
-$ cargo loco start
+$ cargo loco start --server-and-worker
 ```
 
 ### web server
@@ -53,4 +53,5 @@ $ pnpm dev
 
 - web: http://localhost:3000
 - core api: http://localhost:3001
+- mail debug: http://localhost:1080
 - redis-stack: http://localhost:8001
