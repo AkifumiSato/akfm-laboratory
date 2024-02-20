@@ -6,7 +6,7 @@ import multipart from "@fastify/multipart";
 import { githubAuthPlugin } from "./github-auth-plugin";
 import { healthCheckPlugin } from "./health-check-plugin";
 import * as v from "valibot";
-import { store } from "./session";
+import { CustomSession, store } from "./session";
 
 // prepare next app
 const nextApp = next({ dev: process.env.NODE_ENV !== "production" });

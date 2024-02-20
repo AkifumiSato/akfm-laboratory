@@ -1,12 +1,11 @@
 "use client";
 
-import { Button } from "@/components/button";
-import { redirect } from "next/navigation";
+import { LinkButton } from "@/components/link-button";
 
 export function GithubSignIn() {
   return (
-    <Button color="dark" onClick={() => redirect("/login/github")}>
+    <LinkButton color="dark" href="/signin/github">
       GitHub Sign in
-    </Button>
+    </LinkButton>
   );
 }

@@ -9,12 +9,19 @@ export const store = new RedisStore({
   }),
 });
 
-export type Session = {
+export type CustomSession = {
   currentUser?: {
     token?: string;
     github_access_token?: string;
   };
-} & FastifySessionObject;
+};
+
+// session type declare
+declare module "@fastify/session" {
+  interface FastifySessionObject extends CustomSession {}
+}
+
+export type Session = CustomSession & FastifySessionObject;
 
 export const sessionStore = new AsyncLocalStorage<Session | undefined>();
 
