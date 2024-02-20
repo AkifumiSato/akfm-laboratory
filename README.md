@@ -20,6 +20,7 @@
 - [ ] GraphQL server
 - [ ] pages with graphql
 - [ ] Biome
+- [ ] GitHub sign in
 
 ## start
 

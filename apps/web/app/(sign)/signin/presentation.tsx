@@ -5,6 +5,7 @@ import Link from "next/link";
 import { stack } from "../../../styled-system/patterns";
 import { Password } from "../password";
 import { Typography } from "@/components/typography";
+import { GithubSignIn } from "../github-signin";
 
 // todo: react-hook-form + realtime validation
 export function SingInPagePresentation({
@@ -20,11 +21,13 @@ export function SingInPagePresentation({
         <form
           action={action}
           className={stack({
+            rowGap: 10,
             width: "100%",
             alignItems: "center",
           })}
         >
           <Card>
+            <Typography tag="h2">Email</Typography>
             <div className={stack({ gap: "5" })}>
               <InputText type="email" name="email" label="Email" />
               <Password
@@ -37,6 +40,10 @@ export function SingInPagePresentation({
             <div>
               <Link href="/signin/forgot">forgot password?</Link>
             </div>
+          </Card>
+          <Card>
+            <Typography tag="h2">OAuth</Typography>
+            <GithubSignIn />
           </Card>
         </form>
       </div>
