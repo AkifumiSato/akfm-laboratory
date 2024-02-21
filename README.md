@@ -14,7 +14,6 @@
   - [x] APIで全てのusersを取得するエンドポイントの実装
   - [x] sign in test
   - [x] login session
-  - [ ] current user page
   - [ ] OpenAPI
   - [ ] `/posts`
 - [ ] GraphQL server

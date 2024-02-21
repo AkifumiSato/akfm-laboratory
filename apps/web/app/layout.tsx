@@ -1,5 +1,7 @@
 import "./globals.css";
+import { Button } from "@/components/button";
 import type { Metadata } from "next";
+import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import React, { JSX, Suspense } from "react";
 import { css } from "../styled-system/css";
@@ -116,6 +118,17 @@ type CurrentUserResponse = {
 };
 
 async function User() {
+  async function logout() {
+    "use server";
+
+    const session = getSession();
+    if (!session?.currentUser.isLogin) {
+      return;
+    }
+    await session.destroy();
+    revalidatePath("/", "layout");
+  }
+
   const session = getSession();
   if (!session?.currentUser.isLogin) {
     return <>guest</>;
@@ -126,5 +139,18 @@ async function User() {
       Authorization: `Bearer ${session?.currentUser?.token}`,
     },
   }).then((res) => res.json());
-  return <>user: {user.name}</>;
+  return (
+    <div
+      className={css({
+        display: "flex",
+        alignItems: "center",
+        columnGap: "5",
+      })}
+    >
+      <div>user: {user.name}</div>
+      <form action={logout}>
+        <Button>logout</Button>
+      </form>
+    </div>
+  );
 }
