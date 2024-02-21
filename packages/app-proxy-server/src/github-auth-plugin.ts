@@ -1,7 +1,6 @@
 import oauthPlugin, { OAuth2Namespace } from "@fastify/oauth2";
 import { FastifyPluginAsync } from "fastify";
 import fp from "fastify-plugin";
-import { sessionStore } from "./session";
 
 // @fastify/oauth2のdeclareが効かないのでpatch
 declare module "fastify" {
@@ -41,16 +40,10 @@ const githubAuthPluginCallback: FastifyPluginAsync<{
       return;
     }
 
-    request.session.currentUser = {
-      github_access_token: result.token.access_token,
-    };
+    request.session.github_access_token = result.token.access_token;
     await request.session.save();
     // todo: debug page remove
     reply.redirect("/debug");
-  });
-
-  fastify.addHook("onRequest", (request, reply, done) => {
-    sessionStore.run(request.session, done);
   });
 };
 

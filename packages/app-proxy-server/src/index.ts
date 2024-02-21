@@ -1,12 +1,12 @@
-import Fastify from "fastify";
+import Fastify, { type Session } from "fastify";
 import next from "next";
 import fastifyCookie from "@fastify/cookie";
-import fastifySession from "@fastify/session";
+import fastifySession, { type FastifySessionObject } from "@fastify/session";
 import multipart from "@fastify/multipart";
 import { githubAuthPlugin } from "./github-auth-plugin";
 import { healthCheckPlugin } from "./health-check-plugin";
 import * as v from "valibot";
-import { CustomSession, store } from "./session";
+import { sessionStore, store } from "./session";
 
 // prepare next app
 const nextApp = next({ dev: process.env.NODE_ENV !== "production" });
@@ -38,6 +38,18 @@ fastify.register(fastifySession, {
   secret: envVariables.SESSION_SECRET,
   store,
 });
+fastify.addHook("preHandler", async (request) => {
+  if (!request.session.currentUser) {
+    request.session.currentUser = {
+      isLogin: false,
+    };
+  }
+  await request.session.save();
+});
+fastify.addHook("onRequest", (request, _reply, done) => {
+  sessionStore.run(request.session, done);
+});
+
 fastify.register(githubAuthPlugin, {
   serveOrigin: "http://localhost:3000",
   clientId: envVariables.GITHUB_CLIENT_ID,
@@ -47,9 +59,15 @@ fastify.register(githubAuthPlugin, {
 // todo: debug page remove
 fastify.get("/debug", (request) => ({
   session: {
-    currentUser: request.session.currentUser,
+    ...request.session,
+    cookie: undefined,
   },
 }));
+
+fastify.get("/debug/destroy_session", (request) => {
+  request.session.destroy();
+  return "session destroyed";
+});
 
 fastify.all("*", (req, reply) => nextHandle(req.raw, reply.raw));
 
@@ -65,4 +83,4 @@ try {
   process.exit(1);
 }
 
-export type { Session } from "./session";
+export type FastifySession = Session & FastifySessionObject;

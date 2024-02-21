@@ -39,6 +39,7 @@ export default function Page(): JSX.Element {
       if (!session) throw new Error("session not found");
       session.currentUser = {
         ...session.currentUser,
+        isLogin: true,
         token,
       };
       await session.save();

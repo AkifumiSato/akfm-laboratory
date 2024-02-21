@@ -1,8 +1,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import Link from "next/link";
-import type { JSX } from "react";
+import React, { JSX, Suspense } from "react";
 import { css } from "../styled-system/css";
+import { coreApiUrl } from "./lib/api-url";
+import { getSession } from "./lib/session";
 import { NavLink } from "./nav-link";
 import ScrollUp from "./scroll-up";
 
@@ -35,6 +37,9 @@ export default function RootLayout({
         >
           <div
             className={css({
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
               width: "100%",
               maxWidth: "1200px",
             })}
@@ -50,6 +55,9 @@ export default function RootLayout({
             >
               akfm laboratory
             </Link>
+            <Suspense>
+              <User />
+            </Suspense>
           </div>
         </header>
         <div
@@ -101,4 +109,22 @@ export default function RootLayout({
       </body>
     </html>
   );
+}
+
+type CurrentUserResponse = {
+  name: string;
+};
+
+async function User() {
+  const session = getSession();
+  if (!session?.currentUser.isLogin) {
+    return <>guest</>;
+  }
+  const user: CurrentUserResponse = await fetch(`${coreApiUrl}/user/current`, {
+    cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${session?.currentUser?.token}`,
+    },
+  }).then((res) => res.json());
+  return <>user: {user.name}</>;
 }
