@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import type { JSX } from "react";
 import * as v from "valibot";
 import { coreApiUrl } from "../../lib/api-url";
-import { getSession } from "../../lib/session";
+import { getSession, updateSession } from "../../lib/session";
 import { SingInPagePresentation } from "./presentation";
 
 const signInFormSchema = v.object({
@@ -35,16 +35,15 @@ export default function Page(): JSX.Element {
 
     if (response.status === 200) {
       const { token } = (await response.json()) as { token: string };
-      const session = getSession();
-      if (!session) throw new Error("session not found");
+      const session = await getSession();
       session.currentUser = {
         ...session.currentUser,
         isLogin: true,
         token,
       };
-      await session.save();
+      await updateSession(session);
 
-      redirect("/debug", RedirectType.replace);
+      redirect("/", RedirectType.replace);
     } else {
       console.error("action failed", response.status, await response.json());
     }

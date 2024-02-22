@@ -1,7 +1,6 @@
 import "./globals.css";
 import { Button } from "@/components/button";
 import type { Metadata } from "next";
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
 import React, { JSX, Suspense } from "react";
 import { css } from "../styled-system/css";
@@ -9,6 +8,7 @@ import { coreApiUrl } from "./lib/api-url";
 import { getSession } from "./lib/session";
 import { NavLink } from "./nav-link";
 import ScrollUp from "./scroll-up";
+import { logout } from "./action";
 
 export const metadata: Metadata = {
   title: "akfm laboratory",
@@ -119,28 +119,14 @@ type CurrentUserResponse = {
 };
 
 async function User() {
-  async function logout() {
-    "use server";
-
-    const session = getSession();
-    if (!session?.currentUser.isLogin) {
-      return;
-    }
-    // fastifyのsession.destroy()だと、sessionが消える前にレスポンスが返ってるように見受けられるため、手動で初期化
-    session.currentUser = {
-      isLogin: false,
-    };
-    revalidatePath("/", "layout");
-  }
-
-  const session = getSession();
-  if (!session?.currentUser.isLogin) {
+  const session = await getSession();
+  if (!session.currentUser.isLogin) {
     return <>guest</>;
   }
   const user: CurrentUserResponse = await fetch(`${coreApiUrl}/user/current`, {
     cache: "no-store",
     headers: {
-      Authorization: `Bearer ${session?.currentUser?.token}`,
+      Authorization: `Bearer ${session.currentUser?.token}`,
     },
   }).then((res) => res.json());
   return (

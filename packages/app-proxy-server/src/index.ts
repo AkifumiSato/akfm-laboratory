@@ -6,7 +6,7 @@ import multipart from "@fastify/multipart";
 import { githubAuthPlugin } from "./github-auth-plugin";
 import { healthCheckPlugin } from "./health-check-plugin";
 import * as v from "valibot";
-import { sessionStore, store } from "./session";
+import { store } from "./session";
 
 // prepare next app
 const nextApp = next({ dev: process.env.NODE_ENV !== "production" });
@@ -33,23 +33,12 @@ const fastify = Fastify();
 fastify.register(multipart);
 fastify.register(healthCheckPlugin);
 fastify.register(fastifyCookie);
+// todo: rm session
 fastify.register(fastifySession, {
   cookieName: "sessionId",
   secret: envVariables.SESSION_SECRET,
   store,
 });
-fastify.addHook("preHandler", async (request) => {
-  if (!request.session.currentUser) {
-    request.session.currentUser = {
-      isLogin: false,
-    };
-  }
-  await request.session.save();
-});
-fastify.addHook("onRequest", (request, _reply, done) => {
-  sessionStore.run(request.session, done);
-});
-
 fastify.register(githubAuthPlugin, {
   serveOrigin: "http://localhost:3000",
   clientId: envVariables.GITHUB_CLIENT_ID,

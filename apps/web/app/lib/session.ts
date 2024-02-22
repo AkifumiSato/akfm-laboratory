@@ -1,11 +1,48 @@
-import type { AsyncLocalStorage } from "node:async_hooks";
-import type { FastifySession } from "@repo/app-proxy-server";
+import { v4 as uuid } from "uuid";
+import { cookies } from "next/headers";
+import Redis from "ioredis";
 
-declare namespace globalThis {
-  // eslint-disable-next-line no-unused-vars
-  let sessionStore: AsyncLocalStorage<FastifySession | undefined> | undefined;
+const SESSION_COOKIE_NAME = "sessionId";
+
+export const redisStore = new Redis({
+  enableAutoPipelining: true,
+});
+
+type Session = {
+  currentUser:
+    | {
+        isLogin: false;
+      }
+    | {
+        isLogin: true;
+        token: string;
+      };
+};
+
+export async function getSession(): Promise<Session> {
+  const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
+  const session = sessionIdFromCookie
+    ? await redisStore.get(sessionIdFromCookie)
+    : null;
+  if (session) {
+    // todo: validation
+    return JSON.parse(session) as Session;
+  }
+  return {
+    currentUser: {
+      isLogin: false,
+    },
+  };
 }
 
-export function getSession(): FastifySession | undefined {
-  return globalThis.sessionStore?.getStore();
+export async function updateSession(session: Session): Promise<void> {
+  const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
+  let sessionId: string;
+  if (sessionIdFromCookie) {
+    sessionId = sessionIdFromCookie;
+  } else {
+    sessionId = uuid();
+    cookies().set(SESSION_COOKIE_NAME, sessionId);
+  }
+  await redisStore.set(sessionId, JSON.stringify(session));
 }
