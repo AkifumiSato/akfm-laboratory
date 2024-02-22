@@ -42,6 +42,7 @@ export default function RootLayout({
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
+              height: "44px",
               width: "100%",
               maxWidth: "1200px",
             })}

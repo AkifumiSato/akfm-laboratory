@@ -14,8 +14,9 @@
   - [x] APIで全てのusersを取得するエンドポイントの実装
   - [x] sign in test
   - [x] login session
-  - [ ] sign in error
   - [ ] 2回目じゃないとsession維持できない？
+  - [ ] sessionをapp router側で管理
+  - [ ] sign in error
   - [ ] @conform/react
   - [ ] OpenAPI
   - [ ] `/posts`
