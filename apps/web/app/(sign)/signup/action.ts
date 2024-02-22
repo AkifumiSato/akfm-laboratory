@@ -25,7 +25,14 @@ export async function signup(_prevState: unknown, formData: FormData) {
 
   if (response.status === 200) {
     redirect("/signup/completed");
+  } else if (response.status === 409) {
+    return submission.reply({
+      formErrors: ["すでにこのメールアドレスは登録済みです"],
+    });
   } else {
     console.error("action failed", response.status, await response.json());
+    return submission.reply({
+      formErrors: ["エラーが発生しました。もう一度お試しください"],
+    });
   }
 }

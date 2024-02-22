@@ -8,6 +8,7 @@ import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
 import type { JSX } from "react";
 import { useFormState } from "react-dom";
+import { css } from "../../../styled-system/css";
 import { stack } from "../../../styled-system/patterns";
 import { GithubSignIn } from "../github-signin";
 import { Password } from "../password";
@@ -61,6 +62,17 @@ export default function SingUpPage(): JSX.Element {
               />
             </div>
             <Button color="blue">Sign up</Button>
+            {form.errors && (
+              <Typography
+                tag="p"
+                mergeCss={css({
+                  color: "red.500",
+                  fontSize: "sm",
+                })}
+              >
+                {form.errors.join(", ")}
+              </Typography>
+            )}
           </Card>
           <Card>
             <Typography tag="h2">OAuth</Typography>
