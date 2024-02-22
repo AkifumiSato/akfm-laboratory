@@ -16,6 +16,7 @@
   - [x] login session
   - [ ] sign in error
   - [ ] @conform/react
+    - valibotの削除
   - [ ] OpenAPI
   - [ ] `/posts`
 - [ ] GraphQL server
