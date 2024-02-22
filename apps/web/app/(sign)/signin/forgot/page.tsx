@@ -18,7 +18,7 @@ export default function Page() {
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: forgotPasswordFormSchema });
     },
-    shouldValidate: "onBlur",
+    shouldValidate: "onSubmit",
   });
 
   return (

@@ -32,7 +32,7 @@ export default function Page({
     },
 
     // Validate the form on blur event triggered
-    shouldValidate: "onBlur",
+    shouldValidate: "onSubmit",
   });
 
   return (
