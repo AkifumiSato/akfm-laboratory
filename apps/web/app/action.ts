@@ -1,7 +1,8 @@
 "use server";
 
-import { getSession, updateSession } from "./lib/session";
 import { revalidatePath } from "next/cache";
+import { redirect, RedirectType } from "next/navigation";
+import { getSession, updateSession } from "./lib/session";
 
 export async function logout() {
   const session = await getSession();
@@ -14,4 +15,5 @@ export async function logout() {
   };
   await updateSession(session);
   revalidatePath("/", "layout");
+  redirect("/", RedirectType.replace);
 }

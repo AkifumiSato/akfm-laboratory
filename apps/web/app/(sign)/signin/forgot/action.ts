@@ -1,6 +1,7 @@
 "use server";
 
-import { coreApiUrl } from "../../../lib/api-url";
+import { RedirectType } from "next/dist/client/components/redirect";
+import { coreApiUrl } from "../../../lib/api/url";
 import { redirect } from "next/navigation";
 import { forgotPasswordFormSchema } from "./schema";
 import { parseWithZod } from "@conform-to/zod";
@@ -24,8 +25,7 @@ export async function forgotEmail(_prevStata: unknown, formData: FormData) {
   });
 
   if (response.status === 200) {
-    // todo: redirect to send success page
-    redirect("/");
+    redirect("/user", RedirectType.replace);
   } else {
     console.error("action failed", response.status, await response.json());
   }

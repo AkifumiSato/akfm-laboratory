@@ -4,7 +4,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import React, { JSX, Suspense } from "react";
 import { css } from "../styled-system/css";
-import { coreApiUrl } from "./lib/api-url";
+import { CurrentUserResponse } from "./lib/api/types";
+import { coreApiUrl } from "./lib/api/url";
 import { getSession } from "./lib/session";
 import { NavLink } from "./nav-link";
 import ScrollUp from "./scroll-up";
@@ -95,6 +96,9 @@ export default function RootLayout({
                 <NavLink href="/signin">sign in</NavLink>
               </li>
               <li>
+                <NavLink href="/user">user(need auth)</NavLink>
+              </li>
+              <li>
                 <NavLink href="/dynamic_rendering">dynamic_rendering</NavLink>
               </li>
             </ul>
@@ -113,10 +117,6 @@ export default function RootLayout({
     </html>
   );
 }
-
-type CurrentUserResponse = {
-  name: string;
-};
 
 async function User() {
   const session = await getSession();
