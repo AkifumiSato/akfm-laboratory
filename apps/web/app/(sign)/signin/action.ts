@@ -1,6 +1,6 @@
 "use server";
 
-import { coreApiUrl } from "../../lib/api-url";
+import { coreApiUrl } from "../../lib/api/url";
 import { getSession, updateSession } from "../../lib/session";
 import { redirect } from "next/navigation";
 import { RedirectType } from "next/dist/client/components/redirect";
@@ -35,7 +35,7 @@ export async function login(_prevState: unknown, formData: FormData) {
     };
     await updateSession(session);
 
-    redirect("/", RedirectType.replace);
+    redirect("/user", RedirectType.replace);
   } else {
     console.error("action failed", response.status, await response.json());
   }

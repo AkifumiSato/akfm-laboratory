@@ -1,7 +1,8 @@
 "use server";
 
+import { RedirectType } from "next/dist/client/components/redirect";
 import { resetPasswordFormSchema } from "./schema";
-import { coreApiUrl } from "../../../lib/api-url";
+import { coreApiUrl } from "../../../lib/api/url";
 import { redirect } from "next/navigation";
 import { parseWithZod } from "@conform-to/zod";
 
@@ -24,9 +25,7 @@ export async function resetPassword(_prevState: unknown, formData: FormData) {
   });
 
   if (response.status === 200) {
-    console.log("action", response.status, await response.json());
-    // todo: redirect to send success page
-    redirect("/");
+    redirect("/user", RedirectType.replace);
   } else {
     console.error("action failed", response.status, await response.json());
   }
