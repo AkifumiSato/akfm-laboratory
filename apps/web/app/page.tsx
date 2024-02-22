@@ -22,8 +22,18 @@ export default function Page(): JSX.Element {
           })}
         >
           <li>fastify server</li>
-          <li>fastify auth</li>
-          <li>custom cache handler</li>
+          <li>Custom cache handler</li>
+          <li>App Router session</li>
+          <li>
+            Server Action with{" "}
+            <a href="https://conform.guide/" target="_blank">
+              conform
+            </a>
+          </li>
+          <li>Sign up</li>
+          <li>Sign in</li>
+          <li>Github Sign in</li>
+          <li>loco(Rust Web Framework) API</li>
         </ul>
       </div>
     </main>

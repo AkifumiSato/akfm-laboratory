@@ -75,20 +75,17 @@ export default function RootLayout({
         >
           <div
             className={css({
+              display: "flex",
+              flexDirection: "column",
+              rowGap: "7",
               position: "sticky",
               top: "77px",
               paddingTop: "20px",
               alignSelf: "flex-start",
+              width: "240px",
             })}
           >
-            <ul
-              className={css({
-                display: "flex",
-                flexDirection: "column",
-                rowGap: "20px",
-                width: "240px",
-              })}
-            >
+            <NavGroup name="auth">
               <li>
                 <NavLink href="/signup">sign up</NavLink>
               </li>
@@ -98,10 +95,12 @@ export default function RootLayout({
               <li>
                 <NavLink href="/user">user(need auth)</NavLink>
               </li>
+            </NavGroup>
+            <NavGroup name="rendering">
               <li>
                 <NavLink href="/dynamic_rendering">dynamic_rendering</NavLink>
               </li>
-            </ul>
+            </NavGroup>
           </div>
           <div
             className={css({
@@ -141,6 +140,46 @@ async function User() {
       <form action={logout}>
         <Button>logout</Button>
       </form>
+    </div>
+  );
+}
+
+function NavGroup({
+  children,
+  name,
+}: {
+  children: React.ReactNode;
+  name: string;
+}) {
+  return (
+    <div
+      className={css({
+        display: "flex",
+        flexDirection: "column",
+        rowGap: "3",
+      })}
+    >
+      <p
+        className={css({
+          fontSize: "l",
+          fontWeight: "bold",
+          color: "gray.600",
+        })}
+      >
+        {name}
+      </p>
+      <ul
+        className={css({
+          paddingLeft: "2",
+          display: "flex",
+          flexDirection: "column",
+          rowGap: "3",
+          borderColor: "gray.300",
+          borderWidth: "0 0 0 1px",
+        })}
+      >
+        {children}
+      </ul>
     </div>
   );
 }
