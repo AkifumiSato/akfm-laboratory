@@ -1,4 +1,7 @@
 import { test, expect } from "@playwright/test";
+import { v4 as uuid } from "uuid";
+
+const testId = uuid();
 
 test("signup user", async ({ page }) => {
   await page.goto("http://localhost:3000/signup");
@@ -12,8 +15,10 @@ test("signup user", async ({ page }) => {
   await page
     .getByRole("textbox", { name: "User Name" })
     .fill("Playwright user");
-  await page.getByRole("textbox", { name: "Email" }).fill("akfm@example.com");
-  await page.getByTestId("signup-password").fill("test password");
+  await page
+    .getByRole("textbox", { name: "Email" })
+    .fill(`${testId}@example.com`);
+  await page.getByLabel("Password").fill("test password");
   // submit
   await page.getByRole("button", { name: "Sign up" }).click();
 

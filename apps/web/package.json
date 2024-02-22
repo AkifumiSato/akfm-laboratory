@@ -12,10 +12,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
-    "playwright": "playwright test"
+    "playwright": "playwright test",
+    "playwright:ui": "playwright test --ui"
   },
   "dependencies": {
     "@ark-ui/react": "2.0.2",
+    "@conform-to/react": "1.0.2",
+    "@conform-to/zod": "1.0.2",
     "@neshca/cache-handler": "0.6.10",
     "@repo/app-proxy-server": "workspace:*",
     "ioredis": "5.3.2",
@@ -25,7 +28,7 @@
     "react-dom": "18.3.0-canary-03d6f7cf0-20240209",
     "redis": "4.6.13",
     "uuid": "9.0.1",
-    "valibot": "0.27.1"
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@next/eslint-plugin-next": "14.0.4",

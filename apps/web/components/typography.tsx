@@ -1,15 +1,16 @@
-import { css } from "../styled-system/css";
+import { css, cx } from "../styled-system/css";
 
 type TagVariants = "h1" | "h2" | "p";
 
 type Props = {
   children: React.ReactNode;
   tag: TagVariants;
+  mergeCss?: string;
 };
 
-export function Typography({ children, tag }: Props) {
+export function Typography({ children, tag, mergeCss }: Props) {
   const Element = tag;
-  return <Element className={styles[tag]}>{children}</Element>;
+  return <Element className={cx(styles[tag], mergeCss)}>{children}</Element>;
 }
 
 const styles = {

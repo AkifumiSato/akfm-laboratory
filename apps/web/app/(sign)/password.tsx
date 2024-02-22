@@ -6,12 +6,12 @@ import { css } from "../../styled-system/css";
 
 export function Password({
   name,
-  testId,
   label,
+  errors,
 }: {
   name: string;
-  testId: string;
   label?: string;
+  errors?: string[];
 }) {
   const [visible, setVisible] = useState(false);
 
@@ -19,8 +19,8 @@ export function Password({
     <InputText
       type={visible ? "text" : "password"}
       name={name}
-      data-testid={testId}
       label={label}
+      errors={errors}
       autoComplete="on"
       rightElement={
         <button

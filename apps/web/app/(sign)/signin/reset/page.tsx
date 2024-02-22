@@ -1,12 +1,16 @@
-import { redirect } from "next/navigation";
-import * as v from "valibot";
-import { coreApiUrl } from "../../../lib/api-url";
-import { ForgotPasswordPresentation } from "./presentation";
+"use client";
 
-const resetPasswordFormSchema = v.object({
-  password: v.string([]),
-  token: v.string(),
-});
+import { resetPassword } from "./action";
+import { stack } from "../../../../styled-system/patterns";
+import { Typography } from "@/components/typography";
+import { Card } from "@/components/card";
+import { Password } from "../../password";
+import { Button } from "@/components/button";
+import React from "react";
+import { useFormState } from "react-dom";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
+import { resetPasswordFormSchema } from "./schema";
 
 export default function Page({
   searchParams: { token },
@@ -17,35 +21,45 @@ export default function Page({
     throw new Error("Invalid token");
   }
 
-  async function action(data: FormData) {
-    "use server";
+  const [lastResult, action] = useFormState(resetPassword, undefined);
+  const [form, fields] = useForm({
+    // Sync the result of last submission
+    lastResult,
 
-    const user = {
-      password: data.get("password"),
-      token: token,
-    };
-    const validatedUser = v.safeParse(resetPasswordFormSchema, user);
-    if (validatedUser.issues && validatedUser.issues.length > 0) {
-      console.error("issues", validatedUser.issues);
-      throw new Error("Invalid form data");
-    }
-    // todo: fetcher
-    const response = await fetch(`${coreApiUrl}/auth/reset`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(validatedUser.output),
-    });
+    // Reuse the validation logic on the client
+    onValidate({ formData }) {
+      return parseWithZod(formData, { schema: resetPasswordFormSchema });
+    },
 
-    if (response.status === 200) {
-      console.log("action", response.status, await response.json());
-      // todo: redirect to send success page
-      redirect("/");
-    } else {
-      console.error("action failed", response.status, await response.json());
-    }
-  }
+    // Validate the form on blur event triggered
+    shouldValidate: "onBlur",
+  });
 
-  return <ForgotPasswordPresentation action={action} />;
+  return (
+    <main className={stack({ gap: "10" })}>
+      <div className={stack({ rowGap: 5 })}>
+        <Typography tag="h1">Reset Password</Typography>
+        <form
+          id={form.id}
+          onSubmit={form.onSubmit}
+          action={action}
+          noValidate
+          className={stack({
+            width: "100%",
+            alignItems: "center",
+          })}
+        >
+          <Card>
+            <Password
+              name="password"
+              label="New Password"
+              errors={fields.password.errors}
+            />
+            <input type="hidden" name={fields.token.name} value={token} />
+            <Button color="dark">Submit</Button>
+          </Card>
+        </form>
+      </div>
+    </main>
+  );
 }
