@@ -14,9 +14,7 @@
   - [x] APIで全てのusersを取得するエンドポイントの実装
   - [x] sign in test
   - [x] login session
-  - [ ] sign in error
-  - [ ] @conform/react
-    - valibotの削除
+  - [ ] sign up error
   - [ ] oauth対応
   - [ ] OpenAPI
   - [ ] `/posts`
