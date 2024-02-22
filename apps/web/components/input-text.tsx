@@ -22,23 +22,48 @@ export const input = cva({
 
 type InputProps = JSX.IntrinsicElements["input"] & {
   label?: string;
+  errors?: string[];
   rightElement?: React.ReactNode;
 };
 
-export function InputText({ label, rightElement, ...props }: InputProps) {
+export function InputText({
+  label,
+  errors,
+  rightElement,
+  ...props
+}: InputProps) {
   if (label) {
     return (
-      <label className={labelStyle}>
-        {label}
-        <span
-          className={css({
-            position: "relative",
-          })}
-        >
-          <input {...props} className={input()} />
-          {rightElement}
-        </span>
-      </label>
+      <div
+        className={css({
+          display: "flex",
+          flexDirection: "column",
+          rowGap: "2",
+        })}
+      >
+        <label className={labelStyle}>
+          {label}
+          <span
+            className={css({
+              position: "relative",
+            })}
+          >
+            <input {...props} className={input()} />
+            {rightElement}
+          </span>
+        </label>
+        {errors?.map((error) => (
+          <span
+            className={css({
+              color: "red.500",
+              fontSize: "sm",
+            })}
+            key={error}
+          >
+            {error}
+          </span>
+        ))}
+      </div>
     );
   }
   return <input {...props} className={input()} />;

@@ -1,33 +1,28 @@
-import * as v from "valibot";
+"use server";
+
 import { coreApiUrl } from "../../lib/api-url";
 import { getSession, updateSession } from "../../lib/session";
 import { redirect } from "next/navigation";
 import { RedirectType } from "next/dist/client/components/redirect";
+import { parseWithZod } from "@conform-to/zod";
+import { loginSchema } from "./schema";
 
-const signInFormSchema = v.object({
-  email: v.string([v.email()]),
-  password: v.string([v.minLength(4), v.maxLength(100)]),
-});
+export async function login(_prevState: unknown, formData: FormData) {
+  const submission = parseWithZod(formData, {
+    schema: loginSchema,
+  });
 
-export async function action(data: FormData) {
-  "use server";
-
-  const user = {
-    email: data.get("email"),
-    password: data.get("password"),
-  };
-  const validatedUser = v.safeParse(signInFormSchema, user);
-  if (validatedUser.issues && validatedUser.issues.length > 0) {
-    console.error("issues", validatedUser.issues);
-    throw new Error("Invalid form data");
+  if (submission.status !== "success") {
+    return submission.reply();
   }
+
   // todo: fetcher
   const response = await fetch(`${coreApiUrl}/auth/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(validatedUser.output),
+    body: JSON.stringify(submission.value),
   });
 
   if (response.status === 200) {
