@@ -1,14 +1,15 @@
 import type { JSX } from "react";
-import { css } from "../../styled-system/css";
-import { stack } from "../../styled-system/patterns";
+import { css } from "../../../styled-system/css";
+import { stack } from "../../../styled-system/patterns";
 import { Typography } from "@/components/typography";
+import { RevalidateButton } from "../rvalidate-button";
 
 export default function Page(): JSX.Element {
   const random = Math.random();
   return (
     <main className={stack({ gap: "10" })}>
       <div className={stack({ rowGap: 5 })}>
-        <Typography tag="h1">Dynamic rendering page</Typography>
+        <Typography tag="h1">Dynamic rendering</Typography>
         <p>
           random:{" "}
           <span
@@ -20,7 +21,10 @@ export default function Page(): JSX.Element {
             {random}
           </span>
         </p>
+        <RevalidateButton>Revalidate</RevalidateButton>
       </div>
     </main>
   );
 }
+
+export const dynamic = "force-dynamic";

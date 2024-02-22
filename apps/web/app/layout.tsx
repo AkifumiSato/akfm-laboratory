@@ -100,6 +100,9 @@ export default function RootLayout({
               <li>
                 <NavLink href="/dynamic_rendering">dynamic_rendering</NavLink>
               </li>
+              <li>
+                <NavLink href="/static_rendering">static_rendering</NavLink>
+              </li>
             </NavGroup>
           </div>
           <div
