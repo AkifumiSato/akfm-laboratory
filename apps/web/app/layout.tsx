@@ -125,7 +125,10 @@ async function User() {
     if (!session?.currentUser.isLogin) {
       return;
     }
-    await session.destroy();
+    // fastifyのsession.destroy()だと、sessionが消える前にレスポンスが返ってるように見受けられるため、手動で初期化
+    session.currentUser = {
+      isLogin: false,
+    };
     revalidatePath("/", "layout");
   }
 

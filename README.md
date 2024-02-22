@@ -14,6 +14,9 @@
   - [x] APIで全てのusersを取得するエンドポイントの実装
   - [x] sign in test
   - [x] login session
+  - [ ] sign in error
+  - [ ] 2回目じゃないとsession維持できない？
+  - [ ] @conform/react
   - [ ] OpenAPI
   - [ ] `/posts`
 - [ ] GraphQL server
