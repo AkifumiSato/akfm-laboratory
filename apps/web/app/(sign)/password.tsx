@@ -21,6 +21,7 @@ export function Password({
       name={name}
       data-testid={testId}
       label={label}
+      autoComplete="on"
       rightElement={
         <button
           className={css({

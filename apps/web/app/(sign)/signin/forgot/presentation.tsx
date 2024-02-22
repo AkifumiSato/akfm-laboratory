@@ -1,8 +1,8 @@
 import { Button } from "@/components/button";
 import { Card } from "@/components/card";
 import { InputText } from "@/components/input-text";
-import { Prose } from "@/components/prose";
 import { stack } from "../../../../styled-system/patterns";
+import { Typography } from "@/components/typography";
 
 // todo: react-hook-form + realtime validation
 export function ForgotPasswordPresentation({
@@ -13,8 +13,8 @@ export function ForgotPasswordPresentation({
 }) {
   return (
     <main className={stack({ gap: "10" })}>
-      <Prose>
-        <h1>Forget Password</h1>
+      <div className={stack({ rowGap: 5 })}>
+        <Typography tag="h1">Forget Password</Typography>
         <form
           action={action}
           className={stack({
@@ -27,7 +27,7 @@ export function ForgotPasswordPresentation({
             <Button color="dark">Send</Button>
           </Card>
         </form>
-      </Prose>
+      </div>
     </main>
   );
 }

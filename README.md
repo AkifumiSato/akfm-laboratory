@@ -13,13 +13,17 @@
   - [x] APIの挙動確認
   - [x] APIで全てのusersを取得するエンドポイントの実装
   - [x] sign in test
-  - [ ] login session
-  - [ ] github認証を置き換えて削除
+  - [x] login session
+  - [ ] 2回目じゃないとsession維持できない？
+  - [ ] sessionをapp router側で管理
+  - [ ] sign in error
+  - [ ] @conform/react
   - [ ] OpenAPI
   - [ ] `/posts`
 - [ ] GraphQL server
 - [ ] pages with graphql
 - [ ] Biome
+- [ ] GitHub sign in
 
 ## start
 

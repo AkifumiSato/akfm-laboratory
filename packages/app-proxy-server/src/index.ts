@@ -1,7 +1,7 @@
-import Fastify from "fastify";
+import Fastify, { type Session } from "fastify";
 import next from "next";
 import fastifyCookie from "@fastify/cookie";
-import fastifySession from "@fastify/session";
+import fastifySession, { type FastifySessionObject } from "@fastify/session";
 import multipart from "@fastify/multipart";
 import { githubAuthPlugin } from "./github-auth-plugin";
 import { healthCheckPlugin } from "./health-check-plugin";
@@ -33,6 +33,7 @@ const fastify = Fastify();
 fastify.register(multipart);
 fastify.register(healthCheckPlugin);
 fastify.register(fastifyCookie);
+// todo: rm session
 fastify.register(fastifySession, {
   cookieName: "sessionId",
   secret: envVariables.SESSION_SECRET,
@@ -47,9 +48,15 @@ fastify.register(githubAuthPlugin, {
 // todo: debug page remove
 fastify.get("/debug", (request) => ({
   session: {
-    user: request.session.user,
+    ...request.session,
+    cookie: undefined,
   },
 }));
+
+fastify.get("/debug/destroy_session", (request) => {
+  request.session.destroy();
+  return "session destroyed";
+});
 
 fastify.all("*", (req, reply) => nextHandle(req.raw, reply.raw));
 
@@ -65,4 +72,4 @@ try {
   process.exit(1);
 }
 
-export type { Session } from "./session";
+export type FastifySession = Session & FastifySessionObject;
