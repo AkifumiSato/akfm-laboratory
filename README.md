@@ -17,6 +17,7 @@
   - [ ] sign in error
   - [ ] @conform/react
     - valibotの削除
+  - [ ] oauth対応
   - [ ] OpenAPI
   - [ ] `/posts`
 - [ ] GraphQL server
