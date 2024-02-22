@@ -12,7 +12,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "jest",
-    "playwright": "playwright test"
+    "playwright": "playwright test",
+    "playwright:ui": "playwright test --ui"
   },
   "dependencies": {
     "@ark-ui/react": "2.0.2",
