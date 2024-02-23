@@ -42,7 +42,11 @@ export async function updateSession(session: Session): Promise<void> {
     sessionId = sessionIdFromCookie;
   } else {
     sessionId = uuid();
-    cookies().set(SESSION_COOKIE_NAME, sessionId);
+    cookies().set(SESSION_COOKIE_NAME, sessionId, {
+      httpOnly: true,
+      // secure: true,
+      sameSite: "lax",
+    });
   }
   await redisStore.set(sessionId, JSON.stringify(session));
 }
