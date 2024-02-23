@@ -6,7 +6,7 @@ use crate::{
     mailers::auth::AuthMailer,
     models::{
         _entities::users,
-        users::{LoginParams, RegisterParams, RegisterParamsWithGitHub},
+        users::{LoginParams, LoginParamsWithGitHub, RegisterParams, RegisterParamsWithGitHub},
     },
     views::auth::LoginResponse,
 };
@@ -154,7 +154,7 @@ async fn reset(State(ctx): State<AppContext>, Json(params): Json<ResetParams>) -
     format::json(())
 }
 
-/// Creates a user login and returns a token
+/// User login and returns a token
 async fn login(
     State(ctx): State<AppContext>,
     Json(params): Json<LoginParams>,
@@ -176,6 +176,28 @@ async fn login(
     format::json(LoginResponse::new(&user, &token))
 }
 
+/// User login and returns a token
+async fn login_github(
+    State(ctx): State<AppContext>,
+    Json(params): Json<LoginParamsWithGitHub>,
+) -> Result<Json<LoginResponse>> {
+    let user = users::Model::find_by_email(&ctx.db, &params.email).await?;
+
+    let valid = user.verify_github(&params.github_id);
+
+    if !valid {
+        return unauthorized("unauthorized!");
+    }
+
+    let jwt_secret = ctx.config.get_jwt_config()?;
+
+    let token = user
+        .generate_jwt(&jwt_secret.secret, &jwt_secret.expiration)
+        .or_else(|_| unauthorized("unauthorized!"))?;
+
+    format::json(LoginResponse::new(&user, &token))
+}
+
 pub fn routes() -> Routes {
     Routes::new()
         .prefix("auth")
@@ -183,6 +205,7 @@ pub fn routes() -> Routes {
         .add("/register/github", post(register_with_github))
         .add("/verify", post(verify))
         .add("/login", post(login))
+        .add("/login/github", post(login_github))
         .add("/forgot", post(forgot))
         .add("/reset", post(reset))
 }

@@ -185,6 +185,12 @@ async fn can_login_with_verify(#[case] test_name: &str, #[case] password: &str) 
             "token": user.email_verification_token,
         });
         request.post("/api/auth/verify").json(&verify_payload).await;
+        // Make sure email_verified_at is set
+        assert!(users::Model::find_by_email(&ctx.db, email)
+            .await
+            .unwrap()
+            .email_verified_at
+            .is_some());
 
         //verify user request
         let response = request
@@ -195,6 +201,41 @@ async fn can_login_with_verify(#[case] test_name: &str, #[case] password: &str) 
             }))
             .await;
 
+        with_settings!({
+            filters => testing::cleanup_user_model()
+        }, {
+            assert_debug_snapshot!(test_name, (response.status_code(), response.text()));
+        });
+    })
+    .await;
+}
+
+#[tokio::test]
+#[serial]
+async fn can_github_login_with_verify() {
+    configure_insta!();
+
+    testing::request::<App, _, _>(|request, ctx| async move {
+        let github_id = 1234;
+        let email = "test@loco.com";
+        let register_payload = serde_json::json!({
+            "name": "loco",
+            "email": email,
+            "github_id": github_id
+        });
+
+        //Creating a new user
+        let response = request
+            .post("/api/auth/register/github")
+            .json(&register_payload)
+            .await;
+        assert_eq!(response.status_code(), 200);
+
+        let user = users::Model::find_by_email(&ctx.db, email).await.unwrap();
+        let verify_payload = serde_json::json!({
+            "token": user.email_verification_token,
+        });
+        request.post("/api/auth/verify").json(&verify_payload).await;
         // Make sure email_verified_at is set
         assert!(users::Model::find_by_email(&ctx.db, email)
             .await
@@ -202,11 +243,68 @@ async fn can_login_with_verify(#[case] test_name: &str, #[case] password: &str) 
             .email_verified_at
             .is_some());
 
+        //verify user request
+        let response = request
+            .post("/api/auth/login/github")
+            .json(&serde_json::json!({
+                "email": email,
+                "github_id": github_id
+            }))
+            .await;
+        assert_eq!(response.status_code(), 200);
+
         with_settings!({
             filters => testing::cleanup_user_model()
         }, {
-            assert_debug_snapshot!(test_name, (response.status_code(), response.text()));
+            assert_debug_snapshot!((response.status_code(), response.text()));
         });
+    })
+    .await;
+}
+
+#[tokio::test]
+#[serial]
+async fn can_not_github_login_with_verify() {
+    configure_insta!();
+
+    testing::request::<App, _, _>(|request, ctx| async move {
+        let github_id = 1234;
+        let github_id_2 = 1235;
+        let email = "test@loco.com";
+        let register_payload = serde_json::json!({
+            "name": "loco",
+            "email": email,
+            "github_id": github_id
+        });
+
+        //Creating a new user
+        let response = request
+            .post("/api/auth/register/github")
+            .json(&register_payload)
+            .await;
+        assert_eq!(response.status_code(), 200);
+
+        let user = users::Model::find_by_email(&ctx.db, email).await.unwrap();
+        let verify_payload = serde_json::json!({
+            "token": user.email_verification_token,
+        });
+        request.post("/api/auth/verify").json(&verify_payload).await;
+        // Make sure email_verified_at is set
+        assert!(users::Model::find_by_email(&ctx.db, email)
+            .await
+            .unwrap()
+            .email_verified_at
+            .is_some());
+
+        //verify user request
+        let response = request
+            .post("/api/auth/login/github")
+            .json(&serde_json::json!({
+                "email": email,
+                "github_id": github_id_2
+            }))
+            .await;
+        assert_eq!(response.status_code(), 401);
     })
     .await;
 }

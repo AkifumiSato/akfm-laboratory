@@ -22,6 +22,12 @@ pub struct LoginParams {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+pub struct LoginParamsWithGitHub {
+    pub email: String,
+    pub github_id: i32,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
 pub struct RegisterParams {
     pub email: String,
     pub password: String,
@@ -174,6 +180,21 @@ impl super::_entities::users::Model {
         hash::verify_password(password, self_password)
     }
 
+    /// Verifies whether the provided plain password matches the hashed password
+    ///
+    /// # Errors
+    ///
+    /// when could not verify password
+    ///
+    /// # Panics
+    ///
+    /// when the user password is not exist
+    #[must_use]
+    pub fn verify_github(&self, github_id: &i32) -> bool {
+        let self_github_id = self.github_id.as_ref();
+        self_github_id.map_or(false, |self_github_id| self_github_id == github_id)
+    }
+
     /// Asynchronously creates a user with a password and saves it to the
     /// database.
     ///
@@ -248,7 +269,6 @@ impl super::_entities::users::Model {
         .await?;
 
         txn.commit().await?;
-
         Ok(user)
     }
 
