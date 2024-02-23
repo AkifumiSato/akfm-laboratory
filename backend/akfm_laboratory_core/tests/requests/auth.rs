@@ -5,6 +5,7 @@ use rstest::rstest;
 use serial_test::serial;
 
 use super::prepare_data;
+use crate::cleanup_user_model;
 
 // TODO: see how to dedup / extract this to app-local test utils
 // not to framework, because that would require a runtime dep on insta
@@ -15,15 +16,6 @@ macro_rules! configure_insta {
         settings.set_snapshot_suffix("auth_request");
         let _guard = settings.bind_to_scope();
     };
-}
-
-fn cleanup_user_model() -> Vec<(&'static str, &'static str)> {
-    let mut combined_filters = testing::cleanup_user_model().to_vec();
-    combined_filters.extend(vec![(
-        r"password: Some\(.*\n.*\n.*\,",
-        "password: \"PASSWORD\",",
-    )]);
-    combined_filters
 }
 
 #[tokio::test]
@@ -43,7 +35,86 @@ async fn can_register() {
         let saved_user = users::Model::find_by_email(&ctx.db, email).await;
 
         with_settings!({
-            filters => cleanup_user_model()
+            filters => cleanup_user_model(true)
+        }, {
+            assert_debug_snapshot!(saved_user);
+        });
+
+        with_settings!({
+            filters => testing::cleanup_email()
+        }, {
+            assert_debug_snapshot!(ctx.mailer.unwrap().deliveries());
+        });
+    })
+    .await;
+}
+
+#[tokio::test]
+#[serial]
+async fn can_register_with_github() {
+    configure_insta!();
+
+    testing::request::<App, _, _>(|request, ctx| async move {
+        let email = "test@loco.com";
+        let payload = serde_json::json!({
+            "name": "loco",
+            "email": email,
+            "github_id": 1234
+        });
+
+        let _response = request
+            .post("/api/auth/register/github")
+            .json(&payload)
+            .await;
+        let saved_user = users::Model::find_by_email(&ctx.db, email).await;
+
+        with_settings!({
+            filters => cleanup_user_model(true)
+        }, {
+            assert_debug_snapshot!(saved_user);
+        });
+
+        with_settings!({
+            filters => testing::cleanup_email()
+        }, {
+            assert_debug_snapshot!(ctx.mailer.unwrap().deliveries());
+        });
+    })
+    .await;
+}
+
+#[tokio::test]
+#[serial]
+async fn can_re_register_with_github() {
+    configure_insta!();
+
+    testing::request::<App, _, _>(|request, ctx| async move {
+        let name = "loco";
+        let email = "test@loco.com";
+        let payload = serde_json::json!({
+            "name": name,
+            "email": email,
+            "password": "12341234"
+        });
+        // registering with email
+        let response = request.post("/api/auth/register").json(&payload).await;
+        assert_eq!(response.status_code(), 200);
+        // re registering with github
+        let payload = serde_json::json!({
+            "name": name,
+            "email": email,
+            "github_id": 1234
+        });
+        let response = request
+            .post("/api/auth/register/github")
+            .json(&payload)
+            .await;
+        assert_eq!(response.status_code(), 200);
+
+        let saved_user = users::Model::find_by_email(&ctx.db, email).await;
+
+        with_settings!({
+            filters => cleanup_user_model(true)
         }, {
             assert_debug_snapshot!(saved_user);
         });

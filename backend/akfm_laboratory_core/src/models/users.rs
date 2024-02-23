@@ -227,10 +227,14 @@ impl super::_entities::users::Model {
             .filter(users::Column::Email.eq(&params.email))
             .one(&txn)
             .await?;
+
+        // If the user already exists, update the github_id
         if let Some(user) = user {
             let mut user = user.into_active_model();
             user.github_id = Set(Some(params.github_id));
             let user = user.update(&txn).await?;
+
+            txn.commit().await?;
             return Ok(user);
         }
 
