@@ -150,9 +150,18 @@ impl super::_entities::users::Model {
     /// # Errors
     ///
     /// when could not verify password
+    ///
+    /// # Panics
+    ///
+    /// when the user password is not exist
     #[must_use]
     pub fn verify_password(&self, password: &str) -> bool {
-        hash::verify_password(password, &self.password)
+        let self_password = self.password.as_ref();
+        if self_password.is_none() {
+            return false;
+        }
+        let self_password = self_password.unwrap();
+        hash::verify_password(password, self_password)
     }
 
     /// Asynchronously creates a user with a password and saves it to the
@@ -180,7 +189,7 @@ impl super::_entities::users::Model {
             hash::hash_password(&params.password).map_err(|e| ModelError::Any(e.into()))?;
         let user = users::ActiveModel {
             email: ActiveValue::set(params.email.to_string()),
-            password: ActiveValue::set(password_hash),
+            password: ActiveValue::set(Some(password_hash)),
             name: ActiveValue::set(params.name.to_string()),
             ..Default::default()
         }
@@ -278,8 +287,9 @@ impl super::_entities::users::ActiveModel {
         db: &DatabaseConnection,
         password: &str,
     ) -> ModelResult<Model> {
-        self.password =
-            ActiveValue::set(hash::hash_password(password).map_err(|e| ModelError::Any(e.into()))?);
+        self.password = ActiveValue::set(Some(
+            hash::hash_password(password).map_err(|e| ModelError::Any(e.into()))?,
+        ));
         Ok(self.update(db).await?)
     }
 }

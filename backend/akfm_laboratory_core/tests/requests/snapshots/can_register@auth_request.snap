@@ -10,6 +10,7 @@ Ok(
         pid: PID,
         email: "test@loco.com",
         password: "PASSWORD",
+        github_id: None,
         api_key: "lo-PID",
         name: "loco",
         reset_token: None,

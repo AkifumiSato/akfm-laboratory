@@ -16,6 +16,15 @@ macro_rules! configure_insta {
     };
 }
 
+fn cleanup_user_model() -> Vec<(&'static str, &'static str)> {
+    let mut combined_filters = testing::cleanup_user_model().to_vec();
+    combined_filters.extend(vec![(
+        r"password: Some\(.*\n.*\n.*\,",
+        "password: \"PASSWORD\",",
+    )]);
+    combined_filters
+}
+
 #[tokio::test]
 #[serial]
 async fn test_can_validate_model() {
@@ -49,7 +58,7 @@ async fn can_create_with_password() {
     let res = Model::create_with_password(&boot.app_context.db, &params).await;
 
     insta::with_settings!({
-        filters => testing::cleanup_user_model()
+        filters => cleanup_user_model()
     }, {
         assert_debug_snapshot!(res);
     });
