@@ -15,6 +15,7 @@
   - [x] sign in test
   - [x] login session
   - [ ] oauth対応
+  - [ ] Server Actionのテスト
   - [ ] OpenAPI
   - [ ] `/posts`
 - [ ] GraphQL server
