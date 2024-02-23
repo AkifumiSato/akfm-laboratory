@@ -6,7 +6,10 @@ use loco_rs::{
     validation,
     validator::Validate,
 };
-use sea_orm::{entity::prelude::*, ActiveValue, DatabaseConnection, DbErr, TransactionTrait};
+use sea_orm::{
+    entity::prelude::*, ActiveValue, ActiveValue::Set, DatabaseConnection, DbErr, IntoActiveModel,
+    TransactionTrait,
+};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -22,6 +25,13 @@ pub struct LoginParams {
 pub struct RegisterParams {
     pub email: String,
     pub password: String,
+    pub name: String,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct RegisterParamsWithGitHub {
+    pub email: String,
+    pub github_id: i32,
     pub name: String,
 }
 
@@ -190,6 +200,43 @@ impl super::_entities::users::Model {
         let user = users::ActiveModel {
             email: ActiveValue::set(params.email.to_string()),
             password: ActiveValue::set(Some(password_hash)),
+            name: ActiveValue::set(params.name.to_string()),
+            ..Default::default()
+        }
+        .insert(&txn)
+        .await?;
+
+        txn.commit().await?;
+
+        Ok(user)
+    }
+
+    /// Asynchronously creates a user with a GitHub id and saves it to the
+    /// database.
+    ///
+    /// # Errors
+    ///
+    /// When could not save the user into the DB
+    pub async fn create_with_github_id(
+        db: &DatabaseConnection,
+        params: &RegisterParamsWithGitHub,
+    ) -> ModelResult<Self> {
+        let txn = db.begin().await?;
+
+        let user = users::Entity::find()
+            .filter(users::Column::Email.eq(&params.email))
+            .one(&txn)
+            .await?;
+        if let Some(user) = user {
+            let mut user = user.into_active_model();
+            user.github_id = Set(Some(params.github_id));
+            let user = user.update(&txn).await?;
+            return Ok(user);
+        }
+
+        let user = users::ActiveModel {
+            email: ActiveValue::set(params.email.to_string()),
+            github_id: ActiveValue::set(Some(params.github_id)),
             name: ActiveValue::set(params.name.to_string()),
             ..Default::default()
         }

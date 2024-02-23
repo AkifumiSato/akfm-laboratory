@@ -1,0 +1,24 @@
+---
+source: tests/models/users.rs
+expression: res
+---
+Ok(
+    Model {
+        created_at: DATE,
+        updated_at: DATE,
+        id: ID
+        pid: PID,
+        email: "test_with_github@framework.com",
+        password: None,
+        github_id: Some(
+            1234,
+        ),
+        api_key: "lo-PID",
+        name: "framework",
+        reset_token: None,
+        reset_sent_at: None,
+        email_verification_token: None,
+        email_verification_sent_at: None,
+        email_verified_at: None,
+    },
+)
