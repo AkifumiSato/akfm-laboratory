@@ -9,6 +9,7 @@ module.exports = {
   ignorePatterns: [
     "styled-system/**/*",
     "cache-handler.js",
+    "vitest.config.mts",
     "playwright.config.ts",
   ],
 };

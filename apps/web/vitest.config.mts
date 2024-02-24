@@ -12,5 +12,10 @@ export default defineConfig({
     environment: "jsdom",
     include: ["app/**/*.test.{ts,tsx}", "components/**/*.test.{ts,tsx}"],
     setupFiles: "./vitest.setup.ts",
+    env: {
+      GITHUB_CLIENT_ID: "GITHUB_CLIENT_ID",
+      GITHUB_CLIENT_SECRET: "GITHUB_CLIENT_SECRET",
+      SESSION_SECRET: "SESSION_SECRET",
+    },
   },
 });
