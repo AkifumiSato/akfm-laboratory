@@ -32,6 +32,7 @@ export async function login(_prevState: unknown, formData: FormData) {
 
     redirect("/user", RedirectType.replace);
   } else {
-    console.error("action failed", response.status, await response.json());
+    console.error("action failed", response.status);
+    redirect("/signin", RedirectType.replace);
   }
 }
