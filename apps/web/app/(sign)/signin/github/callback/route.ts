@@ -1,7 +1,7 @@
 import { redirect, RedirectType } from "next/navigation";
 import { NextRequest } from "next/server";
 import { coreApiUrl } from "../../../../lib/api/url";
-import { getSession, updateSession } from "../../../../lib/session";
+import { getSession } from "../../../../lib/session";
 
 type GithubAccessTokenResponse = {
   access_token: string;
@@ -85,12 +85,7 @@ export async function GET(request: NextRequest) {
   });
 
   const session = await getSession();
-  session.currentUser = {
-    ...session.currentUser,
-    isLogin: true,
-    token: loginResponse.token,
-  };
-  await updateSession(session);
+  await session.onLogin(loginResponse.token);
 
   redirect("/user", RedirectType.replace);
 }

@@ -9,6 +9,7 @@ declare module "fastify" {
   }
 }
 
+// todo: rm this plugin
 const githubAuthPluginCallback: FastifyPluginAsync<{
   serveOrigin: string;
   clientId: string;
