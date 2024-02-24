@@ -11,7 +11,7 @@
     "prepare": "panda codegen",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "test": "vitest",
+    "test": "vitest --silent",
     "playwright": "playwright test",
     "playwright:ui": "playwright test --ui"
   },
