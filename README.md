@@ -1,35 +1,10 @@
 # akfm laboratory
 
-## Todo
-
-- [x] custom server
-- [x] github OAuth
-- [x] storybook add
-- [x] dynamic rendering page add
-- [x] redis session
-- [x] redis cache handler
-- [ ] sign up/in
-  - [x] docker-composeの整理
-  - [x] APIの挙動確認
-  - [x] APIで全てのusersを取得するエンドポイントの実装
-  - [x] sign in test
-  - [x] login session
-  - [x] oauth対応
-  - [ ] session周りのテストとリファクタ
-  - [ ] Server Actionのテスト
-  - [ ] OpenAPI
-  - [ ] `/posts`
-- [ ] GraphQL server
-- [ ] pages with graphql
-- [ ] Biome
-- [ ] GitHub sign in
-
 ## start
 
 ### redis, redis-stack, postgres
 
 ```sh
-# redis, redis-stack serve
 $ docker compose up
 ```
 
@@ -41,6 +16,21 @@ $ cargo loco start --server-and-worker
 ```
 
 ### web server
+
+1. https://github.com/settings/developers
+2. 「New OAuth App」
+3. 「Application name」に `akfm-laboratory` を追加
+4. 「Authorization callback URL」に `http://localhost:3000/api/auth/callback/github` を追加
+5. 「Homepage URL」に `http://localhost:3000` を追加
+6. Client ID と Client Secret を取得
+7. `frontend/akfm_laboratory_web/.env.local`に環境変数を追加
+
+```env
+SESSION_SECRET="a secret with minimum length of 32 characters"
+GITHUB_CLIENT_ID="[GITHUB_CLIENT_ID]"
+GITHUB_CLIENT_SECRET="[GITHUB_CLIENT_SECRET]"
+REDIS_STACK_URL="redis://localhost:7001"
+```
 
 ```shell
 # ./
