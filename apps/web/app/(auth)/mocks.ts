@@ -11,6 +11,10 @@ export const coreApiHandlers: {
     success: () => HttpHandler;
     error: () => HttpHandler;
   };
+  forgot: {
+    success: () => HttpHandler;
+    error: () => HttpHandler;
+  };
 } = {
   register: {
     success() {
@@ -39,6 +43,18 @@ export const coreApiHandlers: {
     },
     error() {
       return http.post(`${coreApiUrl}/auth/login`, () => {
+        return new HttpResponse(undefined, { status: 500 });
+      });
+    },
+  },
+  forgot: {
+    success() {
+      return http.post(`${coreApiUrl}/auth/forgot`, () => {
+        return new HttpResponse("not reached");
+      });
+    },
+    error() {
+      return http.post(`${coreApiUrl}/auth/forgot`, () => {
         return new HttpResponse(undefined, { status: 500 });
       });
     },
