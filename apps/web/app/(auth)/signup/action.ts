@@ -16,7 +16,6 @@ export async function signup(_prevState: unknown, formData: FormData) {
     return submission.reply();
   }
 
-  // todo: fetcher
   const registerResponse = await fetch(`${coreApiUrl}/auth/register`, {
     method: "POST",
     headers: {
@@ -40,22 +39,14 @@ export async function signup(_prevState: unknown, formData: FormData) {
 
       redirect("/user", RedirectType.replace);
     } else {
-      console.error(
-        "action failed",
-        loginResponse.status,
-        await loginResponse.json(),
-      );
+      console.error("action failed", loginResponse.status);
     }
   } else if (registerResponse.status === 409) {
     return submission.reply({
       formErrors: ["すでにこのメールアドレスは登録済みです"],
     });
   } else {
-    console.error(
-      "action failed",
-      registerResponse.status,
-      await registerResponse.json(),
-    );
+    console.error("action failed", registerResponse.status);
     return submission.reply({
       formErrors: ["エラーが発生しました。もう一度お試しください"],
     });

@@ -5,7 +5,7 @@ export const signupFormSchema = z.object({
     (value) => (value === "" ? undefined : value),
     z
       .string({
-        required_error: "メールアドレスは必須です",
+        required_error: "ユーザー名は必須です",
       })
       .min(1, "ユーザー名は1文字以上で入力してください")
       .max(100, "ユーザー名は100文字以下で入力してください"),
