@@ -28,23 +28,23 @@ const githubAuthPluginCallback: FastifyPluginAsync<{
     callbackUri: `${opts.serveOrigin}/signin/github/callback`,
   });
 
-  fastify.get("/signin/github/callback", async function (request, reply) {
-    const result = await this.githubOAuth2
-      ?.getAccessTokenFromAuthorizationCodeFlow(request)
-      .catch((err: unknown) => {
-        reply.send(err);
-      });
-
-    if (!result?.token) {
-      reply.send("token is undefined");
-      return;
-    }
-
-    request.session.github_access_token = result.token.access_token;
-    await request.session.save();
-    // todo: debug page remove
-    reply.redirect("/debug");
-  });
+  // fastify.get("/signin/github/callback", async function (request, reply) {
+  //   const result = await this.githubOAuth2
+  //     ?.getAccessTokenFromAuthorizationCodeFlow(request)
+  //     .catch((err: unknown) => {
+  //       reply.send(err);
+  //     });
+  //
+  //   if (!result?.token) {
+  //     reply.send("token is undefined");
+  //     return;
+  //   }
+  //
+  //   request.session.github_access_token = result.token.access_token;
+  //   await request.session.save();
+  //   // todo: debug page remove
+  //   reply.redirect("/debug");
+  // });
 };
 
 export const githubAuthPlugin = fp(githubAuthPluginCallback);

@@ -14,7 +14,8 @@
   - [x] APIで全てのusersを取得するエンドポイントの実装
   - [x] sign in test
   - [x] login session
-  - [ ] oauth対応
+  - [x] oauth対応
+  - [ ] session周りのテストとリファクタ
   - [ ] Server Actionのテスト
   - [ ] OpenAPI
   - [ ] `/posts`
