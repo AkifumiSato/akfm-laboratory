@@ -1,5 +1,7 @@
-import { beforeAll, afterEach, afterAll } from "vitest";
+import { beforeAll, afterEach, afterAll, vi } from "vitest";
 import { server } from "./app/mocks";
+
+vi.mock("ioredis", async () => await import("ioredis-mock"));
 
 beforeAll(() =>
   server.listen({

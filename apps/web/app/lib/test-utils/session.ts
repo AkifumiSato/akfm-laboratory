@@ -1,6 +1,7 @@
-import Redis from "ioredis";
+import Redis from "ioredis-mock";
+import { Redis as OriginalRedis } from "ioredis";
 
-let redis: Redis;
+let redis: OriginalRedis;
 
 export function getRedisInstance() {
   if (!redis) {
