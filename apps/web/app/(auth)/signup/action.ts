@@ -16,7 +16,6 @@ export async function signup(_prevState: unknown, formData: FormData) {
     return submission.reply();
   }
 
-  // todo: fetcher
   const registerResponse = await fetch(`${coreApiUrl}/auth/register`, {
     method: "POST",
     headers: {

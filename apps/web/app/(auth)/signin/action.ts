@@ -16,7 +16,6 @@ export async function login(_prevState: unknown, formData: FormData) {
     return submission.reply();
   }
 
-  // todo: fetcher
   const response = await fetch(`${coreApiUrl}/auth/login`, {
     method: "POST",
     headers: {

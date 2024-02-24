@@ -50,7 +50,6 @@ export async function GET(request: NextRequest) {
   });
 
   // todo: 登録済みの場合、スキップ
-  // todo: fetcher
   await fetch(`${coreApiUrl}/auth/register/github`, {
     method: "POST",
     headers: {
@@ -66,7 +65,6 @@ export async function GET(request: NextRequest) {
     return res.json();
   });
 
-  // todo: fetcher
   const loginResponse: LoginResponse = await fetch(
     `${coreApiUrl}/auth/login/github`,
     {

@@ -15,7 +15,6 @@ export async function forgotEmail(_prevStata: unknown, formData: FormData) {
     return submission.reply();
   }
 
-  // todo: fetcher
   const response = await fetch(`${coreApiUrl}/auth/forgot`, {
     method: "POST",
     headers: {

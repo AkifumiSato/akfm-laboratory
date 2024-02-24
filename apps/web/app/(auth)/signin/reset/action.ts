@@ -15,7 +15,6 @@ export async function resetPassword(_prevState: unknown, formData: FormData) {
     return submission.reply();
   }
 
-  // todo: fetcher
   const response = await fetch(`${coreApiUrl}/auth/reset`, {
     method: "POST",
     headers: {
@@ -27,6 +26,9 @@ export async function resetPassword(_prevState: unknown, formData: FormData) {
   if (response.status === 200) {
     redirect("/user", RedirectType.replace);
   } else {
-    console.error("action failed", response.status, await response.json());
+    console.error("action failed", response.status);
+    return submission.reply({
+      formErrors: ["エラーが発生しました。もう一度お試しください"],
+    });
   }
 }
