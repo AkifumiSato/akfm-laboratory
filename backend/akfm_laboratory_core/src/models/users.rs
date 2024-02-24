@@ -6,7 +6,10 @@ use loco_rs::{
     validation,
     validator::Validate,
 };
-use sea_orm::{entity::prelude::*, ActiveValue, DatabaseConnection, DbErr, TransactionTrait};
+use sea_orm::{
+    entity::prelude::*, ActiveValue, ActiveValue::Set, DatabaseConnection, DbErr, IntoActiveModel,
+    TransactionTrait,
+};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -19,9 +22,22 @@ pub struct LoginParams {
 }
 
 #[derive(Debug, Deserialize, Serialize)]
+pub struct LoginParamsWithGitHub {
+    pub email: String,
+    pub github_id: i32,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
 pub struct RegisterParams {
     pub email: String,
     pub password: String,
+    pub name: String,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+pub struct RegisterParamsWithGitHub {
+    pub email: String,
+    pub github_id: i32,
     pub name: String,
 }
 
@@ -150,9 +166,33 @@ impl super::_entities::users::Model {
     /// # Errors
     ///
     /// when could not verify password
+    ///
+    /// # Panics
+    ///
+    /// when the user password is not exist
     #[must_use]
     pub fn verify_password(&self, password: &str) -> bool {
-        hash::verify_password(password, &self.password)
+        let self_password = self.password.as_ref();
+        if self_password.is_none() {
+            return false;
+        }
+        let self_password = self_password.unwrap();
+        hash::verify_password(password, self_password)
+    }
+
+    /// Verifies whether the provided plain password matches the hashed password
+    ///
+    /// # Errors
+    ///
+    /// when could not verify password
+    ///
+    /// # Panics
+    ///
+    /// when the user password is not exist
+    #[must_use]
+    pub fn verify_github(&self, github_id: &i32) -> bool {
+        let self_github_id = self.github_id.as_ref();
+        self_github_id.map_or(false, |self_github_id| self_github_id == github_id)
     }
 
     /// Asynchronously creates a user with a password and saves it to the
@@ -180,7 +220,7 @@ impl super::_entities::users::Model {
             hash::hash_password(&params.password).map_err(|e| ModelError::Any(e.into()))?;
         let user = users::ActiveModel {
             email: ActiveValue::set(params.email.to_string()),
-            password: ActiveValue::set(password_hash),
+            password: ActiveValue::set(Some(password_hash)),
             name: ActiveValue::set(params.name.to_string()),
             ..Default::default()
         }
@@ -189,6 +229,46 @@ impl super::_entities::users::Model {
 
         txn.commit().await?;
 
+        Ok(user)
+    }
+
+    /// Asynchronously creates a user with a GitHub id and saves it to the
+    /// database.
+    ///
+    /// # Errors
+    ///
+    /// When could not save the user into the DB
+    pub async fn create_with_github_id(
+        db: &DatabaseConnection,
+        params: &RegisterParamsWithGitHub,
+    ) -> ModelResult<Self> {
+        let txn = db.begin().await?;
+
+        let user = users::Entity::find()
+            .filter(users::Column::Email.eq(&params.email))
+            .one(&txn)
+            .await?;
+
+        // If the user already exists, update the github_id
+        if let Some(user) = user {
+            let mut user = user.into_active_model();
+            user.github_id = Set(Some(params.github_id));
+            let user = user.update(&txn).await?;
+
+            txn.commit().await?;
+            return Ok(user);
+        }
+
+        let user = users::ActiveModel {
+            email: ActiveValue::set(params.email.to_string()),
+            github_id: ActiveValue::set(Some(params.github_id)),
+            name: ActiveValue::set(params.name.to_string()),
+            ..Default::default()
+        }
+        .insert(&txn)
+        .await?;
+
+        txn.commit().await?;
         Ok(user)
     }
 
@@ -278,8 +358,9 @@ impl super::_entities::users::ActiveModel {
         db: &DatabaseConnection,
         password: &str,
     ) -> ModelResult<Model> {
-        self.password =
-            ActiveValue::set(hash::hash_password(password).map_err(|e| ModelError::Any(e.into()))?);
+        self.password = ActiveValue::set(Some(
+            hash::hash_password(password).map_err(|e| ModelError::Any(e.into()))?,
+        ));
         Ok(self.update(db).await?)
     }
 }

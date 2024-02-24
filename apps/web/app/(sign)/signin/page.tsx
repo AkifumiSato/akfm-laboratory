@@ -22,7 +22,7 @@ export default function Page(): JSX.Element {
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: loginSchema });
     },
-    shouldValidate: "onBlur",
+    shouldValidate: "onSubmit",
   });
 
   return (

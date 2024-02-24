@@ -10,7 +10,9 @@ Ok(
         pid: PID,
         email: "test@framework.com",
         password: "PASSWORD",
-        github_id: None,
+        github_id: Some(
+            1234,
+        ),
         api_key: "lo-PID",
         name: "framework",
         reset_token: None,

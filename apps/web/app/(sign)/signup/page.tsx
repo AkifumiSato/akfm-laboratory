@@ -22,7 +22,7 @@ export default function SingUpPage(): JSX.Element {
     onValidate({ formData }) {
       return parseWithZod(formData, { schema: signupFormSchema });
     },
-    shouldValidate: "onBlur",
+    shouldValidate: "onSubmit",
   });
 
   return (

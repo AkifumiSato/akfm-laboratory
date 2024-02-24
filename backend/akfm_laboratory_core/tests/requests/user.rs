@@ -4,6 +4,7 @@ use loco_rs::testing;
 use serial_test::serial;
 
 use super::prepare_data;
+use crate::cleanup_user_model;
 
 // TODO: see how to dedup / extract this to app-local test utils
 // not to framework, because that would require a runtime dep on insta
@@ -31,7 +32,7 @@ async fn can_get_current_user() {
             .await;
 
         with_settings!({
-            filters => testing::cleanup_user_model()
+            filters => cleanup_user_model(true)
         }, {
             assert_debug_snapshot!((response.status_code(), response.text()));
         });

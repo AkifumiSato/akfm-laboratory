@@ -1,11 +1,13 @@
 use akfm_laboratory_core::{
     app::App,
-    models::users::{self, Model, RegisterParams},
+    models::users::{self, Model, RegisterParams, RegisterParamsWithGitHub},
 };
 use insta::assert_debug_snapshot;
 use loco_rs::{model::ModelError, testing};
 use sea_orm::{ActiveModelTrait, ActiveValue, IntoActiveModel};
 use serial_test::serial;
+
+use crate::cleanup_user_model;
 
 macro_rules! configure_insta {
     ($($expr:expr),*) => {
@@ -49,7 +51,56 @@ async fn can_create_with_password() {
     let res = Model::create_with_password(&boot.app_context.db, &params).await;
 
     insta::with_settings!({
-        filters => testing::cleanup_user_model()
+        filters => cleanup_user_model(true)
+    }, {
+        assert_debug_snapshot!(res);
+    });
+}
+
+#[tokio::test]
+#[serial]
+async fn can_create_with_github_id() {
+    configure_insta!();
+
+    let boot = testing::boot_test::<App>().await.unwrap();
+
+    let params = RegisterParamsWithGitHub {
+        email: "test_with_github@framework.com".to_string(),
+        github_id: 1234,
+        name: "framework".to_string(),
+    };
+    let res = Model::create_with_github_id(&boot.app_context.db, &params).await;
+
+    insta::with_settings!({
+        filters => cleanup_user_model(false)
+    }, {
+        assert_debug_snapshot!(res);
+    });
+}
+
+#[tokio::test]
+#[serial]
+async fn can_update_with_github_id() {
+    configure_insta!();
+
+    let boot = testing::boot_test::<App>().await.unwrap();
+    // register user with password
+    let params = RegisterParams {
+        email: "test@framework.com".to_string(),
+        password: "1234".to_string(),
+        name: "framework".to_string(),
+    };
+    let _res = Model::create_with_password(&boot.app_context.db, &params).await;
+    // update user with github id
+    let params = RegisterParamsWithGitHub {
+        email: "test@framework.com".to_string(),
+        github_id: 1234,
+        name: "framework".to_string(),
+    };
+    let res = Model::create_with_github_id(&boot.app_context.db, &params).await;
+
+    insta::with_settings!({
+        filters => cleanup_user_model(true)
     }, {
         assert_debug_snapshot!(res);
     });

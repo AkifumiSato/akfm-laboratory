@@ -1,7 +1,7 @@
 "use server";
 
 import { coreApiUrl } from "../../lib/api/url";
-import { getSession, updateSession } from "../../lib/session";
+import { getSession } from "../../lib/session";
 import { redirect } from "next/navigation";
 import { RedirectType } from "next/dist/client/components/redirect";
 import { parseWithZod } from "@conform-to/zod";
@@ -28,12 +28,7 @@ export async function login(_prevState: unknown, formData: FormData) {
   if (response.status === 200) {
     const { token } = (await response.json()) as { token: string };
     const session = await getSession();
-    session.currentUser = {
-      ...session.currentUser,
-      isLogin: true,
-      token,
-    };
-    await updateSession(session);
+    await session.onLogin(token);
 
     redirect("/user", RedirectType.replace);
   } else {

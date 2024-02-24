@@ -14,7 +14,8 @@ pub struct Model {
     pub pid: Uuid,
     #[sea_orm(unique)]
     pub email: String,
-    pub password: String,
+    pub password: Option<String>,
+    pub github_id: Option<i32>,
     #[sea_orm(unique)]
     pub api_key: String,
     pub name: String,

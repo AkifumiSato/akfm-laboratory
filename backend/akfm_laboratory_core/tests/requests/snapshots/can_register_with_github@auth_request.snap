@@ -9,8 +9,10 @@ Ok(
         id: ID
         pid: PID,
         email: "test@loco.com",
-        password: "PASSWORD",
-        github_id: None,
+        password: None,
+        github_id: Some(
+            1234,
+        ),
         api_key: "lo-PID",
         name: "loco",
         reset_token: None,

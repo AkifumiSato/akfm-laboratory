@@ -6,10 +6,11 @@ use crate::{
     mailers::auth::AuthMailer,
     models::{
         _entities::users,
-        users::{LoginParams, RegisterParams},
+        users::{LoginParams, LoginParamsWithGitHub, RegisterParams, RegisterParamsWithGitHub},
     },
     views::auth::LoginResponse,
 };
+
 #[derive(Debug, Deserialize, Serialize)]
 pub struct VerifyParams {
     pub token: String,
@@ -33,6 +34,40 @@ async fn register(
     Json(params): Json<RegisterParams>,
 ) -> Result<(StatusCode, Json<()>)> {
     let res = users::Model::create_with_password(&ctx.db, &params).await;
+
+    let user = match res {
+        Ok(user) => user,
+        Err(err) => {
+            tracing::info!(
+                message = err.to_string(),
+                user_email = &params.email,
+                "could not register user",
+            );
+            return Err(Error::CustomError(
+                StatusCode::CONFLICT,
+                ErrorDetail::new(" could not register user", &err.to_string()),
+            ));
+        }
+    };
+
+    let user = user
+        .into_active_model()
+        .set_email_verification_sent(&ctx.db)
+        .await
+        .or(Err(Error::InternalServerError));
+
+    AuthMailer::send_welcome(&ctx, &user.unwrap()).await?;
+
+    Ok((StatusCode::OK, Json(())))
+}
+
+/// Register function creates a new user with the given parameters and sends a
+/// welcome email to the user
+async fn register_with_github(
+    State(ctx): State<AppContext>,
+    Json(params): Json<RegisterParamsWithGitHub>,
+) -> Result<(StatusCode, Json<()>)> {
+    let res = users::Model::create_with_github_id(&ctx.db, &params).await;
 
     let user = match res {
         Ok(user) => user,
@@ -119,7 +154,7 @@ async fn reset(State(ctx): State<AppContext>, Json(params): Json<ResetParams>) -
     format::json(())
 }
 
-/// Creates a user login and returns a token
+/// User login and returns a token
 async fn login(
     State(ctx): State<AppContext>,
     Json(params): Json<LoginParams>,
@@ -141,12 +176,36 @@ async fn login(
     format::json(LoginResponse::new(&user, &token))
 }
 
+/// User login and returns a token
+async fn login_github(
+    State(ctx): State<AppContext>,
+    Json(params): Json<LoginParamsWithGitHub>,
+) -> Result<Json<LoginResponse>> {
+    let user = users::Model::find_by_email(&ctx.db, &params.email).await?;
+
+    let valid = user.verify_github(&params.github_id);
+
+    if !valid {
+        return unauthorized("unauthorized!");
+    }
+
+    let jwt_secret = ctx.config.get_jwt_config()?;
+
+    let token = user
+        .generate_jwt(&jwt_secret.secret, &jwt_secret.expiration)
+        .or_else(|_| unauthorized("unauthorized!"))?;
+
+    format::json(LoginResponse::new(&user, &token))
+}
+
 pub fn routes() -> Routes {
     Routes::new()
         .prefix("auth")
         .add("/register", post(register))
+        .add("/register/github", post(register_with_github))
         .add("/verify", post(verify))
         .add("/login", post(login))
+        .add("/login/github", post(login_github))
         .add("/forgot", post(forgot))
         .add("/reset", post(reset))
 }
