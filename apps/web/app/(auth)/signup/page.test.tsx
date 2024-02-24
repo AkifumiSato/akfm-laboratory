@@ -1,11 +1,12 @@
+import { describe, expect, Mock, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Page from "./page";
 import { signup } from "./action";
 
-jest.mock("./action");
+vi.mock("./action");
 
-const signupMock = signup as jest.Mock;
+const signupMock = signup as Mock;
 
 describe("SingUpPagePresentation", () => {
   test("submit時のFormDataにname,email,passwordが含まれること", async () => {
