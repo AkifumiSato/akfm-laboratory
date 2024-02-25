@@ -1,11 +1,11 @@
+import fastifyCookie from "@fastify/cookie";
+import multipart from "@fastify/multipart";
+import fastifySession, { type FastifySessionObject } from "@fastify/session";
 import Fastify, { type Session } from "fastify";
 import next from "next";
-import fastifyCookie from "@fastify/cookie";
-import fastifySession, { type FastifySessionObject } from "@fastify/session";
-import multipart from "@fastify/multipart";
+import * as v from "valibot";
 import { githubAuthPlugin } from "./github-auth-plugin";
 import { healthCheckPlugin } from "./health-check-plugin";
-import * as v from "valibot";
 import { store } from "./session";
 
 // prepare next app

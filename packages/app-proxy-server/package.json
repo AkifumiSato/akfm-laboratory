@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "tsup src/index.ts --watch",
     "type": "tsc --noEmit",
+    "check": "biome check .",
     "build": "tsup src/index.ts"
   },
   "devDependencies": {

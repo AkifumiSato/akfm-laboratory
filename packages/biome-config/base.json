@@ -1,7 +1,7 @@
 {
   "$schema": "https://biomejs.dev/schemas/1.5.3/schema.json",
   "files": {
-    "ignore": ["node_modules", ".next", "playwright-report", "styled-system"],
+    "ignore": ["node_modules", ".next", "dist", "playwright-report", "styled-system"],
     "ignoreUnknown": true
   },
   "organizeImports": {
@@ -10,7 +10,7 @@
   "formatter": {
     "enabled": true,
     "formatWithErrors": false,
-    "ignore": ["node_modules", ".next", "playwright-report", "styled-system"],
+    "ignore": ["node_modules", ".next", "dist", "playwright-report", "styled-system"],
     "indentWidth": 2,
     "indentStyle": "space"
   },
