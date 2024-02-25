@@ -1,4 +1,4 @@
-import { beforeEach, Mock, vi } from "vitest";
+import { Mock, beforeEach, vi } from "vitest";
 
 const redirectMock = vi.hoisted(() => vi.fn());
 export const mockNavigation = (): {

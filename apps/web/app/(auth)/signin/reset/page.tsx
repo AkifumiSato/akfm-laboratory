@@ -1,15 +1,15 @@
 "use client";
 
-import { resetPassword } from "./action";
-import { stack } from "../../../../styled-system/patterns";
-import { Typography } from "@/components/typography";
-import { Card } from "@/components/card";
-import { Password } from "../../password";
 import { Button } from "@/components/button";
-import React from "react";
-import { useFormState } from "react-dom";
+import { Card } from "@/components/card";
+import { Typography } from "@/components/typography";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
+import React from "react";
+import { useFormState } from "react-dom";
+import { stack } from "../../../../styled-system/patterns";
+import { Password } from "../../password";
+import { resetPassword } from "./action";
 import { resetPasswordFormSchema } from "./schema";
 
 export default function Page({
@@ -56,7 +56,9 @@ export default function Page({
               errors={fields.password.errors}
             />
             <input type="hidden" name={fields.token.name} value={token} />
-            <Button color="dark">Submit</Button>
+            <Button type="submit" color="dark">
+              Submit
+            </Button>
           </Card>
         </form>
       </div>

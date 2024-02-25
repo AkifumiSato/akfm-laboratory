@@ -1,10 +1,10 @@
 "use server";
 
-import { RedirectType } from "next/dist/client/components/redirect";
-import { coreApiUrl } from "../../../lib/api/url";
-import { redirect } from "next/navigation";
-import { forgotPasswordFormSchema } from "./schema";
 import { parseWithZod } from "@conform-to/zod";
+import { RedirectType } from "next/dist/client/components/redirect";
+import { redirect } from "next/navigation";
+import { coreApiUrl } from "../../../lib/api/url";
+import { forgotPasswordFormSchema } from "./schema";
 
 export async function forgotEmail(_prevStata: unknown, formData: FormData) {
   const submission = parseWithZod(formData, {

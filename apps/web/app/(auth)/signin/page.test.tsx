@@ -1,8 +1,8 @@
-import { describe, expect, Mock, test, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Page from "./page";
+import { Mock, describe, expect, test, vi } from "vitest";
 import { login } from "./action";
+import Page from "./page";
 
 vi.mock("./action");
 

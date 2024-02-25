@@ -1,19 +1,19 @@
 "use client";
 
-import type { JSX } from "react";
-import { login } from "./action";
-import { useFormState } from "react-dom";
-import { useForm } from "@conform-to/react";
-import { parseWithZod } from "@conform-to/zod";
-import { loginSchema } from "./schema";
-import { stack } from "../../../styled-system/patterns";
-import { Typography } from "@/components/typography";
+import { Button } from "@/components/button";
 import { Card } from "@/components/card";
 import { InputText } from "@/components/input-text";
-import { Password } from "../password";
-import { Button } from "@/components/button";
+import { Typography } from "@/components/typography";
+import { useForm } from "@conform-to/react";
+import { parseWithZod } from "@conform-to/zod";
 import Link from "next/link";
+import type { JSX } from "react";
+import { useFormState } from "react-dom";
+import { stack } from "../../../styled-system/patterns";
 import { GithubSignIn } from "../github-signin";
+import { Password } from "../password";
+import { login } from "./action";
+import { loginSchema } from "./schema";
 
 export default function Page(): JSX.Element {
   const [lastResult, action] = useFormState(login, undefined);
@@ -55,7 +55,9 @@ export default function Page(): JSX.Element {
                 errors={fields.password.errors as string[]}
               />
             </div>
-            <Button color="blue">Sign in</Button>
+            <Button type="submit" color="blue">
+              Sign in
+            </Button>
             <div>
               <Link href="/signin/forgot">forgot password?</Link>
             </div>

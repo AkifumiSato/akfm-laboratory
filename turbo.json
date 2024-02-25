@@ -7,9 +7,6 @@
       "env": ["GITHUB_CLIENT_ID", "GITHUB_CLIENT_SECRET"],
       "outputs": ["dist/**", ".next/**", "!.next/cache/**"]
     },
-    "lint": {
-      "dependsOn": ["^lint"]
-    },
     "dev": {
       "cache": false,
       "persistent": true
