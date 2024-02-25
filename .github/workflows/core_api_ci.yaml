@@ -102,6 +102,7 @@ jobs:
         uses: actions/setup-python@v2
       - name: Restore mtime
         run: python ./git-restore-mtime.py
+        working-directory: ./backend/akfm_laboratory_core
 
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
