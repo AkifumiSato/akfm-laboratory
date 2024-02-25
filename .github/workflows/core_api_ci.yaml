@@ -89,11 +89,20 @@ jobs:
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions-rs/toolchain@v1
         with:
           profile: ${{ env.TOOLCHAIN_PROFILE }}
           toolchain: ${{ env.RUST_TOOLCHAIN }}
           override: true
+
+      # https://zenn.dev/kt3k/articles/d557cc874961ab
+      - name: Install Python
+        uses: actions/setup-python@v2
+      - name: Restore mtime
+        run: python ./git-restore-mtime.py
+
       - name: Setup Rust cache
         uses: Swatinem/rust-cache@v2
       - name: Run cargo test
