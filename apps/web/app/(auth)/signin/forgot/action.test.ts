@@ -1,7 +1,7 @@
 import { RedirectType } from "next/navigation";
-import { describe, test, expect } from "vitest";
-import { server } from "../../../mocks";
+import { describe, expect, test } from "vitest";
 import { mockNavigation } from "../../../lib/test-utils/next";
+import { server } from "../../../mocks";
 import { coreApiHandlers } from "../../mocks";
 import { forgotEmail } from "./action";
 

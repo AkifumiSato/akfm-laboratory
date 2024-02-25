@@ -61,7 +61,9 @@ export default function SingUpPage(): JSX.Element {
                 errors={fields.password.errors}
               />
             </div>
-            <Button color="blue">Sign up</Button>
+            <Button type="submit" color="blue">
+              Sign up
+            </Button>
             {form.errors && (
               <Typography
                 tag="p"

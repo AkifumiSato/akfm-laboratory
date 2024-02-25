@@ -1,7 +1,7 @@
+import { Typography } from "@/components/typography";
 import type { JSX } from "react";
 import { css } from "../../../styled-system/css";
 import { stack } from "../../../styled-system/patterns";
-import { Typography } from "@/components/typography";
 import { RevalidateButton } from "../rvalidate-button";
 
 export default function Page(): JSX.Element {

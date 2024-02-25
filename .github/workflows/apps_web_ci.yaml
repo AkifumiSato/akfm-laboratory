@@ -39,11 +39,8 @@ jobs:
       - name: Install packages
         run: pnpm i
 
-      - name: Lint
-        run: pnpm lint
-
-      - name: Format check
-        run: pnpm exec prettier --check .
+      - name: Check
+        run: pnpm run check
 
       - name: Test
         run: pnpm test

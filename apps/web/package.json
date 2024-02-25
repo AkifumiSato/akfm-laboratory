@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "NODE_ENV=production app-proxy-server",
     "clean-start": "rm -rf .next && next build && NODE_ENV=production app-proxy-server",
-    "lint": "eslint . --max-warnings 0",
+    "check": "biome check .",
     "prepare": "panda codegen",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
@@ -31,9 +31,11 @@
     "zod": "3.22.4"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.5.3",
     "@next/eslint-plugin-next": "14.0.4",
     "@pandacss/dev": "0.27.2",
     "@playwright/test": "1.41.2",
+    "@repo/biome-config": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@storybook/addon-essentials": "7.6.10",

@@ -1,6 +1,6 @@
-import { v4 as uuid } from "uuid";
-import { cookies } from "next/headers";
 import Redis from "ioredis";
+import { cookies } from "next/headers";
+import { v4 as uuid } from "uuid";
 
 const SESSION_COOKIE_NAME = "sessionId";
 

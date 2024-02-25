@@ -24,6 +24,7 @@ export const Dark: Story = {
   args: {
     color: "dark",
     children: "Button",
+    type: "button",
   },
 };
 
@@ -31,5 +32,6 @@ export const Blue: Story = {
   args: {
     color: "blue",
     children: "Button",
+    type: "button",
   },
 };

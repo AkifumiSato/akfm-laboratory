@@ -10,7 +10,9 @@ export function RevalidateButton({ children }: { children?: React.ReactNode }) {
 
   return (
     <form action={action}>
-      <Button color="dark">{children}</Button>
+      <Button type="submit" color="dark">
+        {children}
+      </Button>
     </form>
   );
 }

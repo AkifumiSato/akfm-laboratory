@@ -1,14 +1,14 @@
 "use client";
 
-import { forgotEmail } from "./action";
-import { stack } from "../../../../styled-system/patterns";
-import { Typography } from "@/components/typography";
+import { Button } from "@/components/button";
 import { Card } from "@/components/card";
 import { InputText } from "@/components/input-text";
-import { Button } from "@/components/button";
-import { useFormState } from "react-dom";
+import { Typography } from "@/components/typography";
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
+import { useFormState } from "react-dom";
+import { stack } from "../../../../styled-system/patterns";
+import { forgotEmail } from "./action";
 import { forgotPasswordFormSchema } from "./schema";
 
 export default function Page() {
@@ -42,7 +42,9 @@ export default function Page() {
               label="Email"
               errors={fields.email.errors}
             />
-            <Button color="dark">Send</Button>
+            <Button type="submit" color="dark">
+              Send
+            </Button>
           </Card>
         </form>
       </div>

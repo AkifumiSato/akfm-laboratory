@@ -34,11 +34,17 @@ export const button = cva({
 
 type ButtonProps = {
   color?: "dark" | "blue";
+  type: "button" | "submit" | "reset";
 } & JSX.IntrinsicElements["button"];
 
-export function Button({ children, color = "dark", ...props }: ButtonProps) {
+export function Button({
+  children,
+  type,
+  color = "dark",
+  ...props
+}: ButtonProps) {
   return (
-    <button {...props} className={button({ color })}>
+    <button {...props} type={type} className={button({ color })}>
       {children}
     </button>
   );

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import { css } from "../../../styled-system/css";
 import { stack } from "../../../styled-system/patterns";
 
-export default function Error({
+export default function ErrorPage({
   error,
   reset,
 }: {
@@ -39,6 +39,7 @@ export default function Error({
           </li>
           <li>
             <button
+              type="submit"
               onClick={() => reset()}
               className={css({
                 color: "blue.500",

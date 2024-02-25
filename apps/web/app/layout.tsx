@@ -1,15 +1,15 @@
-import "./globals.css";
 import { Button } from "@/components/button";
 import type { Metadata } from "next";
 import Link from "next/link";
 import React, { JSX, Suspense } from "react";
 import { css } from "../styled-system/css";
+import { logout } from "./action";
+import "./globals.css";
 import { CurrentUserResponse } from "./lib/api/types";
 import { coreApiUrl } from "./lib/api/url";
 import { getSession } from "./lib/session";
 import { NavLink } from "./nav-link";
 import ScrollUp from "./scroll-up";
-import { logout } from "./action";
 
 export const metadata: Metadata = {
   title: "akfm laboratory",
@@ -141,7 +141,7 @@ async function User() {
     >
       <div>user: {user.name}</div>
       <form action={logout}>
-        <Button>logout</Button>
+        <Button type="submit">logout</Button>
       </form>
     </div>
   );

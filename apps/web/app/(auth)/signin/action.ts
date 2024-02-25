@@ -1,10 +1,10 @@
 "use server";
 
+import { parseWithZod } from "@conform-to/zod";
+import { RedirectType } from "next/dist/client/components/redirect";
+import { redirect } from "next/navigation";
 import { coreApiUrl } from "../../lib/api/url";
 import { getSession } from "../../lib/session";
-import { redirect } from "next/navigation";
-import { RedirectType } from "next/dist/client/components/redirect";
-import { parseWithZod } from "@conform-to/zod";
 import { loginSchema } from "./schema";
 
 export async function login(_prevState: unknown, formData: FormData) {

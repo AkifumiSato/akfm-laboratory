@@ -1,9 +1,9 @@
 import { RedirectType } from "next/navigation";
 import { NextRequest } from "next/server";
-import { describe, test, expect } from "vitest";
+import { describe, expect, test } from "vitest";
+import { mockCookies, mockNavigation } from "../../../../lib/test-utils/next";
 import { getRedisInstance } from "../../../../lib/test-utils/session";
 import { server } from "../../../../mocks";
-import { mockNavigation, mockCookies } from "../../../../lib/test-utils/next";
 import { coreApiHandlers, githubApiHandlers } from "../../../mocks";
 import { GET } from "./route";
 

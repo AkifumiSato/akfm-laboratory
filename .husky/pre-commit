@@ -1,8 +1,7 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-pnpm run lint
-pnpm exec prettier --check .
+pnpm run check
 
 cargo fmt --check --manifest-path backend/akfm_laboratory_core/Cargo.toml
 cargo clippy --manifest-path backend/akfm_laboratory_core/Cargo.toml --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
