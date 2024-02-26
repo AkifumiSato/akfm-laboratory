@@ -9,10 +9,10 @@
 - [x] redis session
 - [x] redis cache handler
 - [x] sign up/in
-- [ ] Server Actionのテスト
+- [x] Server Actionのテスト
+- [x] Biome
 - [ ] OpenAPI
 - [ ] `/posts`
 - [ ] GraphQL server
 - [ ] pages with graphql
-- [ ] Biome
 - [ ] GitHub sign in

@@ -11,7 +11,7 @@ $ docker compose up
 ### api server
 
 ```shell
-$ cd backend/akfm_laboratory_core
+$ cd backend/core
 $ cargo loco start --server-and-worker
 ```
 
