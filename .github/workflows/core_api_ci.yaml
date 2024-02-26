@@ -30,7 +30,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: fmt
-          args: --manifest-path backend/akfm_laboratory_core/Cargo.toml --all -- --check
+          args: --manifest-path backend/core/Cargo.toml --all -- --check
 
   clippy:
     name: Run Clippy
@@ -53,7 +53,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: clippy
-          args: --manifest-path backend/akfm_laboratory_core/Cargo.toml --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
+          args: --manifest-path backend/core/Cargo.toml --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
 
   test:
     name: Run Tests
@@ -75,7 +75,7 @@ jobs:
       postgres:
         image: postgres
         env:
-          POSTGRES_DB: akfm_laboratory_core_test
+          POSTGRES_DB: core_test
           POSTGRES_USER: akfm
           POSTGRES_PASSWORD: akfm
         ports:
@@ -100,7 +100,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: test
-          args: --manifest-path backend/akfm_laboratory_core/Cargo.toml --all-features --all
+          args: --manifest-path backend/core/Cargo.toml --all-features --all
         env:
           REDIS_URL: redis://localhost:${{job.services.redis.ports[6379]}}
-          DATABASE_URL: postgres://akfm:akfm@localhost:5433/akfm_laboratory_core_test
+          DATABASE_URL: postgres://akfm:akfm@localhost:5433/core_test
