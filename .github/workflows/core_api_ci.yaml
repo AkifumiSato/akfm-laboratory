@@ -1,8 +1,5 @@
 name: Core API CI
 on:
-  push:
-    branches:
-      - main
   pull_request:
 
 env:
