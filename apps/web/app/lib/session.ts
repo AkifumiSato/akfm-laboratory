@@ -50,7 +50,7 @@ class Session {
       cookies().set(SESSION_COOKIE_NAME, sessionId, {
         httpOnly: true,
         // secure: true,
-        sameSite: "lax",
+        // sameSite: "lax",
       });
     }
     await redisStore.set(sessionId, JSON.stringify(this.values));
