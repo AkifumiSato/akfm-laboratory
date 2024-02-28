@@ -1,12 +1,14 @@
-import { RedirectType } from "next/navigation";
-import { describe, expect, test } from "vitest";
-import { mockCookies, mockNavigation } from "../../lib/test-utils/next";
+import { cookies } from "next/headers";
+import { RedirectType, redirect } from "next/navigation";
+import { Mock, describe, expect, test } from "vitest";
 import { server } from "../../mocks";
 import { coreApiHandlers } from "../mocks";
 import { signup } from "./action";
 
-const { redirectMock } = mockNavigation();
-const { setCookiesMock } = mockCookies();
+const cookiesMock = cookies() as unknown as {
+  get: Mock;
+  set: Mock;
+};
 
 describe("sign up action", () => {
   test("バリデーションエラー時、エラーメッセージが返却されること", async () => {
@@ -17,7 +19,7 @@ describe("sign up action", () => {
     expect(res?.error).toEqual({
       name: ["ユーザー名は必須です"],
     });
-    expect(redirectMock).not.toBeCalled();
+    expect(redirect).not.toBeCalled();
   });
 
   test("登録済みエラー時、エラーメッセージが返却されること", async () => {
@@ -33,7 +35,7 @@ describe("sign up action", () => {
     expect(res?.error).toEqual({
       "": ["すでにこのメールアドレスは登録済みです"],
     });
-    expect(redirectMock).not.toBeCalled();
+    expect(redirect).not.toBeCalled();
   });
 
   test("APIからエラー返却時、エラーメッセージが返却されること", async () => {
@@ -49,7 +51,7 @@ describe("sign up action", () => {
     expect(res?.error).toEqual({
       "": ["エラーが発生しました。もう一度お試しください"],
     });
-    expect(redirectMock).not.toBeCalled();
+    expect(redirect).not.toBeCalled();
   });
 
   test("登録成功時に`/users`へリダイレクト", async () => {
@@ -65,9 +67,9 @@ describe("sign up action", () => {
     const res = await signup(null, formData);
     // Assert
     expect(res).toBeUndefined();
-    expect(setCookiesMock).toBeCalledTimes(1);
-    expect(setCookiesMock.mock.calls[0][0]).toBe("sessionId");
-    expect(redirectMock).toBeCalledTimes(1);
-    expect(redirectMock).toBeCalledWith("/user", RedirectType.replace);
+    expect(cookiesMock.set).toBeCalledTimes(1);
+    expect(cookiesMock.set.mock.calls[0][0]).toBe("sessionId");
+    expect(redirect).toBeCalledTimes(1);
+    expect(redirect).toBeCalledWith("/user", RedirectType.replace);
   });
 });

@@ -1,11 +1,8 @@
-import { RedirectType } from "next/navigation";
+import { RedirectType, redirect } from "next/navigation";
 import { describe, expect, test } from "vitest";
-import { mockNavigation } from "../../../lib/test-utils/next";
 import { server } from "../../../mocks";
 import { coreApiHandlers } from "../../mocks";
 import { forgotEmail } from "./action";
-
-const { redirectMock } = mockNavigation();
 
 describe("forgot action", () => {
   test("バリデーションエラー時、エラーメッセージが返却されること", async () => {
@@ -16,7 +13,7 @@ describe("forgot action", () => {
     expect(res?.error).toEqual({
       email: ["メールアドレスは必須です"],
     });
-    expect(redirectMock).not.toBeCalled();
+    expect(redirect).not.toBeCalled();
   });
 
   test("APIからエラー返却時、エラーメッセージが返却されること", async () => {
@@ -40,7 +37,7 @@ describe("forgot action", () => {
     const res = await forgotEmail(null, formData);
     // Assert
     expect(res).toBeUndefined();
-    expect(redirectMock).toBeCalledTimes(1);
-    expect(redirectMock).toBeCalledWith("/user", RedirectType.replace);
+    expect(redirect).toBeCalledTimes(1);
+    expect(redirect).toBeCalledWith("/user", RedirectType.replace);
   });
 });
