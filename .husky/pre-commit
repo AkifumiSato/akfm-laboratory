@@ -2,6 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 pnpm run check
+pnpm run test
 
 cargo fmt --check --manifest-path backend/core/Cargo.toml
 cargo clippy --manifest-path backend/core/Cargo.toml --all-features -- -D warnings -W clippy::pedantic -W clippy::nursery -W rust-2018-idioms
