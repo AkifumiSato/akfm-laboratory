@@ -22,8 +22,8 @@ type PersistedSession = {
 class MutableSession {
   private readonly values: PersistedSession;
 
-  constructor(values?: PersistedSession) {
-    this.values = values ?? { currentUser: { isLogin: false } };
+  constructor(values: PersistedSession) {
+    this.values = values;
   }
 
   get currentUser() {
@@ -57,23 +57,7 @@ class MutableSession {
   }
 }
 
-// use only in actions/route handlers
-export async function getMutableSession(): Promise<MutableSession> {
-  const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
-  const session = sessionIdFromCookie
-    ? await redisStore.get(sessionIdFromCookie)
-    : null;
-  if (session) {
-    // todo: validation
-    return new MutableSession(JSON.parse(session) as PersistedSession);
-  }
-  return new MutableSession();
-}
-
-// readonly session
-export async function getReadonlySession(): Promise<
-  Readonly<PersistedSession>
-> {
+async function loadPersistedSession(): Promise<PersistedSession> {
   const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
   const session = sessionIdFromCookie
     ? await redisStore.get(sessionIdFromCookie)
@@ -82,4 +66,16 @@ export async function getReadonlySession(): Promise<
     return JSON.parse(session) as PersistedSession;
   }
   return { currentUser: { isLogin: false } };
+}
+
+// use only in actions/route handlers
+export async function getMutableSession(): Promise<MutableSession> {
+  return new MutableSession(await loadPersistedSession());
+}
+
+// readonly session
+export async function getReadonlySession(): Promise<
+  Readonly<PersistedSession>
+> {
+  return await loadPersistedSession();
 }
