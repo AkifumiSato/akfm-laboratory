@@ -1,14 +1,16 @@
-import { RedirectType } from "next/navigation";
+import { cookies } from "next/headers";
+import { RedirectType, redirect } from "next/navigation";
 import { NextRequest } from "next/server";
-import { describe, expect, test } from "vitest";
-import { mockCookies, mockNavigation } from "../../../../lib/test-utils/next";
+import { Mock, describe, expect, test } from "vitest";
 import { getRedisInstance } from "../../../../lib/test-utils/session";
 import { server } from "../../../../mocks";
 import { coreApiHandlers, githubApiHandlers } from "../../../mocks";
 import { GET } from "./route";
 
-const { redirectMock } = mockNavigation();
-const { setCookiesMock } = mockCookies();
+const cookiesMock = cookies() as unknown as {
+  get: Mock;
+  set: Mock;
+};
 
 describe("GET", () => {
   test("access_tokenの取得エラー", async () => {
@@ -87,9 +89,9 @@ describe("GET", () => {
     const response = await GET(request);
     // Assert
     expect(response).toBeUndefined();
-    expect(setCookiesMock).toBeCalledTimes(1);
-    expect(setCookiesMock.mock.calls[0][0]).toBe("sessionId");
-    const sessionId = setCookiesMock.mock.calls[0][1];
+    expect(cookiesMock.set).toBeCalledTimes(1);
+    expect(cookiesMock.set.mock.calls[0][0]).toBe("sessionId");
+    const sessionId = cookiesMock.set.mock.calls[0][1];
     const sessionValues = await redis
       .get(sessionId)
       .then((res) => (res === null ? null : JSON.parse(res)));
@@ -99,7 +101,7 @@ describe("GET", () => {
         token: "DUMMY TOKEN",
       },
     });
-    expect(redirectMock).toBeCalledTimes(1);
-    expect(redirectMock).toBeCalledWith("/user", RedirectType.replace);
+    expect(redirect).toBeCalledTimes(1);
+    expect(redirect).toBeCalledWith("/user", RedirectType.replace);
   });
 });
