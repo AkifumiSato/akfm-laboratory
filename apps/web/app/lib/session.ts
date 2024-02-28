@@ -19,8 +19,8 @@ type PersistedSession = {
       };
 };
 
-class Session {
-  private values: PersistedSession;
+class MutableSession {
+  private readonly values: PersistedSession;
 
   constructor(values?: PersistedSession) {
     this.values = values ?? { currentUser: { isLogin: false } };
@@ -57,14 +57,29 @@ class Session {
   }
 }
 
-export async function getSession(): Promise<Session> {
+// use only in actions/route handlers
+export async function getMutableSession(): Promise<MutableSession> {
   const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
   const session = sessionIdFromCookie
     ? await redisStore.get(sessionIdFromCookie)
     : null;
   if (session) {
     // todo: validation
-    return new Session(JSON.parse(session) as PersistedSession);
+    return new MutableSession(JSON.parse(session) as PersistedSession);
   }
-  return new Session();
+  return new MutableSession();
+}
+
+// readonly session
+export async function getReadonlySession(): Promise<
+  Readonly<PersistedSession>
+> {
+  const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
+  const session = sessionIdFromCookie
+    ? await redisStore.get(sessionIdFromCookie)
+    : null;
+  if (session) {
+    return JSON.parse(session) as PersistedSession;
+  }
+  return { currentUser: { isLogin: false } };
 }

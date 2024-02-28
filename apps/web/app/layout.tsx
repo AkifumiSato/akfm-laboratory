@@ -7,7 +7,7 @@ import { logout } from "./action";
 import "./globals.css";
 import { CurrentUserResponse } from "./lib/api/types";
 import { coreApiUrl } from "./lib/api/url";
-import { getSession } from "./lib/session";
+import { getReadonlySession } from "./lib/session";
 import { NavLink } from "./nav-link";
 import ScrollUp from "./scroll-up";
 
@@ -121,7 +121,7 @@ export default function RootLayout({
 }
 
 async function User() {
-  const session = await getSession();
+  const session = await getReadonlySession();
   if (!session.currentUser.isLogin) {
     return <>guest</>;
   }
