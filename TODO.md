@@ -11,6 +11,7 @@
 - [x] sign up/in
 - [x] Server Actionのテスト
 - [x] Biome
+- [ ] location-state
 - [ ] OpenAPI
 - [ ] `/posts`
 - [ ] GraphQL server

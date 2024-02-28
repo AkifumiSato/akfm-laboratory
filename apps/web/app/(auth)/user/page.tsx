@@ -3,11 +3,11 @@ import { css } from "../../../styled-system/css";
 import { stack } from "../../../styled-system/patterns";
 import { CurrentUserResponse } from "../../lib/api/types";
 import { coreApiUrl } from "../../lib/api/url";
-import { getSession } from "../../lib/session";
+import { getReadonlySession } from "../../lib/session";
 
 // todo: impl auth check middleware
 export default async function Page() {
-  const session = await getSession();
+  const session = await getReadonlySession();
   if (!session.currentUser.isLogin) {
     throw new Error("Unauthorized");
   }

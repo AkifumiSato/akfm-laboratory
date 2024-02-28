@@ -4,7 +4,7 @@ import { parseWithZod } from "@conform-to/zod";
 import { RedirectType } from "next/dist/client/components/redirect";
 import { redirect } from "next/navigation";
 import { coreApiUrl } from "../../lib/api/url";
-import { getSession } from "../../lib/session";
+import { getMutableSession } from "../../lib/session";
 import { signupFormSchema } from "./schema";
 
 export async function signup(_prevState: unknown, formData: FormData) {
@@ -34,7 +34,7 @@ export async function signup(_prevState: unknown, formData: FormData) {
     });
     if (loginResponse.status === 200) {
       const { token } = (await loginResponse.json()) as { token: string };
-      const session = await getSession();
+      const session = await getMutableSession();
       await session.onLogin(token);
 
       redirect("/user", RedirectType.replace);
