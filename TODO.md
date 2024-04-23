@@ -11,7 +11,8 @@
 - [x] sign up/in
 - [x] Server Actionのテスト
 - [x] Biome
-- [ ] OpenAPI
+- [x] OpenAPI
+- [ ] type safe fetch
 - [ ] location-state
 - [ ] `/posts`
 - [ ] GraphQL server
