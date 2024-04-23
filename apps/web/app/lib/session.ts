@@ -8,7 +8,7 @@ export const redisStore = new Redis({
   enableAutoPipelining: true,
 });
 
-type PersistedSession = {
+type RedisSession = {
   currentUser:
     | {
         isLogin: false;
@@ -20,23 +20,23 @@ type PersistedSession = {
 };
 
 class MutableSession {
-  private readonly values: PersistedSession;
+  private readonly redisSession: RedisSession;
 
-  constructor(values?: PersistedSession) {
-    this.values = values ?? { currentUser: { isLogin: false } };
+  constructor(redisSession: RedisSession) {
+    this.redisSession = redisSession;
   }
 
   get currentUser() {
-    return this.values.currentUser;
+    return this.redisSession.currentUser;
   }
 
   async onLogin(token: string) {
-    this.values.currentUser = { isLogin: true, token };
+    this.redisSession.currentUser = { isLogin: true, token };
     await this.save();
   }
 
   async onLogout() {
-    this.values.currentUser = { isLogin: false };
+    this.redisSession.currentUser = { isLogin: false };
     await this.save();
   }
 
@@ -53,33 +53,27 @@ class MutableSession {
         // sameSite: "lax",
       });
     }
-    await redisStore.set(sessionId, JSON.stringify(this.values));
+    await redisStore.set(sessionId, JSON.stringify(this.redisSession));
   }
+}
+
+async function loadPersistedSession(): Promise<RedisSession> {
+  const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
+  const session = sessionIdFromCookie
+    ? await redisStore.get(sessionIdFromCookie)
+    : null;
+  if (session) {
+    return JSON.parse(session) as RedisSession;
+  }
+  return { currentUser: { isLogin: false } };
 }
 
 // use only in actions/route handlers
 export async function getMutableSession(): Promise<MutableSession> {
-  const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
-  const session = sessionIdFromCookie
-    ? await redisStore.get(sessionIdFromCookie)
-    : null;
-  if (session) {
-    // todo: validation
-    return new MutableSession(JSON.parse(session) as PersistedSession);
-  }
-  return new MutableSession();
+  return new MutableSession(await loadPersistedSession());
 }
 
 // readonly session
-export async function getReadonlySession(): Promise<
-  Readonly<PersistedSession>
-> {
-  const sessionIdFromCookie = cookies().get(SESSION_COOKIE_NAME)?.value;
-  const session = sessionIdFromCookie
-    ? await redisStore.get(sessionIdFromCookie)
-    : null;
-  if (session) {
-    return JSON.parse(session) as PersistedSession;
-  }
-  return { currentUser: { isLogin: false } };
+export async function getReadonlySession(): Promise<Readonly<RedisSession>> {
+  return await loadPersistedSession();
 }
