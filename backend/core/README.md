@@ -6,7 +6,7 @@
 
 ```sh
 $ rustc -V
-# 1.78.0-nightly (a4472498d 2024-02-15)
+# rustc 1.79.0-nightly (7f2fc33da 2024-04-22)
 ```
 
 ### boot db

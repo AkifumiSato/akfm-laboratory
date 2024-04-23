@@ -58,6 +58,7 @@ async fn register(
 
     AuthMailer::send_welcome(&ctx, &user.unwrap()).await?;
 
+    // todo: fix status code to CREATED
     Ok((StatusCode::OK, Json(())))
 }
 

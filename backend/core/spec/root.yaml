@@ -1,0 +1,251 @@
+openapi: 3.0.3
+info:
+  title: akfm laboratory core API
+  version: 0.1.0
+servers:
+  - url: 'http://localhost:3001/api'
+paths:
+  /_health:
+    get:
+      tags:
+        - debug
+      summary: Health check
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ok:
+                    type: boolean
+                    example: true
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Register a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                name:
+                  type: string
+                password:
+                  type: string
+              example:
+                email: "akfm.sato@example.com"
+                name: "akfm"
+                password: "password"
+      responses:
+        '200':
+          description: OK
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+  /auth/register/github:
+    post:
+      tags:
+        - auth
+      summary: Register a new user with GitHub
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                github_id:
+                  type: integer
+                  description: GitHub user id
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: OK
+        '409':
+          description: Conflict
+        '500':
+          description: Internal Server Error
+  /verify:
+    post:
+      tags:
+        - auth
+      summary: Verify email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required: true
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal Server Error
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Login with email and password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required: true
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /auth/login/github:
+    post:
+      tags:
+        - auth
+      summary: Login with GitHub
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required: true
+              type: object
+              properties:
+                github_id:
+                  type: integer
+                  description: GitHub user id
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+  /auth/forgot:
+    post:
+      tags:
+        - auth
+      summary: Forgot password (send email)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required: true
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+      responses:
+        '200':
+          description: OK
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+  /auth/reset:
+    post:
+      tags:
+        - auth
+      summary: Reset password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required: true
+              type: object
+              properties:
+                token:
+                  type: string
+                password:
+                  type: string
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal Server Error
+  /user/current:
+    get:
+      tags:
+        - user
+      summary: Get current user information (requires authentication)
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+  /admin/users:
+    get:
+      tags:
+        - admin
+      summary: Get all users
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /admin/users/{pid}:
+    get:
+      tags:
+        - admin
+      summary: Get a user by pid
+      parameters:
+        - in: path
+          name: pid
+          required: true
+          schema:
+            type: string
+          example: "12345"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        pid:
+          type: string
+          example: "random string"
+        name:
+          type: string
+          example: "akfm"
+        email:
+            type: string
+            format: email
+            example: "akfm.sato@example.com"
